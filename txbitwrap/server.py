@@ -1,3 +1,4 @@
+import os
 import uuid
 import sys
 
@@ -12,29 +13,28 @@ from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerPr
 from autobahn.twisted.resource import WebSocketResource, WSGIRootResource
 
 
-# Our WebSocket Server protocol
 class EchoServerProtocol(WebSocketServerProtocol):
+    """ Testing websocket echo """
 
     def onMessage(self, payload, isBinary):
+        """ just return payload """
         self.sendMessage(payload, isBinary)
 
-
-# Our WSGI application .. in this case Flask based
-app = Flask(__name__, template_folder='./txbitwrap/templates')
-app.secret_key = str(uuid.uuid4())
-
+app = Flask( __name__, template_folder=os.path.abspath(os.path.dirname(__file__) + '/../txbitwrap/templates'))
 
 @app.route('/')
 def page_home():
     return render_template('index.html')
 
+def factory(options):
+    # TODO: update to accept args from options
 
-if __name__ == "__main__":
+    app.secret_key = str(uuid.uuid4())
 
-    log.startLogging(sys.stdout)
+    #log.startLogging(sys.stdout)
 
     # create a Twisted Web resource for our WebSocket server
-    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:8080")
+    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:8080") # TODO get from options
     wsFactory.protocol = EchoServerProtocol
     wsResource = WebSocketResource(wsFactory)
 
@@ -46,7 +46,4 @@ if __name__ == "__main__":
     rootResource = WSGIRootResource(wsgiResource, {b'ws': wsResource})
 
     # create a Twisted Web Site and run everything
-    site = Site(rootResource)
-
-    reactor.listenTCP(8080, site)
-    reactor.run()
+    return Site(rootResource)

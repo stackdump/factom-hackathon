@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-python txbitwrap/server.py
+twistd -n bitwrap

@@ -1,19 +1,8 @@
-WebSocket Echo Server as Twisted Web Resource plus WSGI/Flask
-=============================================================
+# txbitwrap
 
-This is a variant of a basic WebSocket Echo server that is running as a *Twisted Web Resource*.
+An event-oriented service using a PostgreSQL database as an eventstore.
+Fork of http://getbitwrap.com
 
-Running
--------
+### Status
 
-Run the server by doing
-
-    python server.py
-
-and open
-
-    http://localhost:8080/
-
-in your browser.
-
-This will show up all WebSocket messages exchanged between clients and server.
+Porting from cyclone.io to autobahn/flask app
