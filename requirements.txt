@@ -1,0 +1,7 @@
+twisted
+autobahn
+flask
+flask-cors
+flask-restful
+github-flask
+pg8000

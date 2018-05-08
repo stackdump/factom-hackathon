@@ -4,12 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-ipython = "*"
 
 [packages]
 autobahn = "*"
-twisted = "*"
-flask = "*"
+"pg8000" = "*"
+Twisted = "*"
+Flask = "*"
+Flask-Cors = "*"
+Flask-RESTful = "*"
+GitHub-Flask = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.6"
