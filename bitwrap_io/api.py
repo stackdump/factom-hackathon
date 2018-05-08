@@ -36,7 +36,7 @@ class Rpc(Resource):
             res['result'] = call(req['method'], req['params'])
             res['error'] = None
         except Exception as ex:
-            res = { 'id': req.get('id'), 'error': ex.message }
+            res = { 'id': req.get('id'), 'error': str(ex)}
 
         return res, 200, None
 
@@ -117,3 +117,6 @@ routes = [
 
 for route in routes:
     api.add_resource(route.pop('resource'), *route.pop('urls'), **route)
+
+if __name__ == '__main__':
+    application.run(debug=True, host='0.0.0.0', port=8080)

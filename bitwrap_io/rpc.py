@@ -19,14 +19,9 @@ def rpc_schema_exists(schema):
     """ test that an event-machine schema exists """
     return eventstore(schema).storage.db.schema_exists()
 
-def rpc_schema_create(schema, *args):
+def rpc_schema_create(schema, name):
     """ test that an event-machine schema exists """
     machine = pnml.Machine(schema)
-
-    if args[0] is None:
-        name = schema
-    else:
-        name = args[0]
 
     try:
         pgsql.create_schema(machine, schema_name=name, **SETTINGS)

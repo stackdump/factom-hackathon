@@ -1,13 +1,12 @@
 **last updated**
-
-Sun May  6 13:18:03 CDT 2018
+Mon May  7 22:53:45 CDT 2018
 
 porting features from cyclone based project to autobahn/flask
 
 WIP
 ---
 
-* test schema creation - currenly invoking rpc api from ipython doesn't work
+fix/test event dispatch
 
 BACKLOG
 -------

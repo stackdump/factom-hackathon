@@ -13,22 +13,6 @@ def connect(**kwargs):
         timeout=5
     )
 
-def recreate_db(**kwargs):
-    conn = pg8000.connect(
-        host=kwargs['pg-host'],
-        user=kwargs['pg-username'],
-        password=kwargs['pg-password'],
-        database='postgres',
-        timeout=5
-    )
-
-    name = kwargs['pg-database']
-
-    conn.autocommit = True
-    txn = conn.cursor()
-    txn.execute("DROP DATABASE IF EXISTS %s" % name)
-    txn.execute("CREATE DATABASE %s" % name)
-
 def drop_schema(schema, **kwargs):
     "" ""
     conn = connect(**kwargs)
@@ -42,18 +26,7 @@ def drop_schema(schema, **kwargs):
             print('__SQL_ERR__')
             print(sql)
 
-    try_execute("DROP TRIGGER %s_dispatch on %s.events" % (schema, schema))
-    try_execute("DROP TABLE %s.transitions" % schema)
-    try_execute("DROP TABLE %s.events" % schema)
-    try_execute("DROP TABLE %s.states" % schema)
-    try_execute("DROP FUNCTION %s.vclock()" % schema)
-    try_execute("DROP TYPE %s.state CASCADE" % schema)
-    try_execute("DROP TYPE %s.vector CASCADE" % schema)
-    try_execute("DROP TYPE %s.event CASCADE" % schema)
-    try_execute("DROP TYPE %s.event_payload CASCADE" % schema)
-    try_execute("DROP TYPE %s.current_state CASCADE" % schema)
-    try_execute("DROP DOMAIN %s.token" % schema)
-    try_execute("DROP SCHEMA %s" % schema)
+    try_execute("DROP SCHEMA IF EXISTS %s" % schema)
 
 
 def create_schema(machine, **kwargs):
@@ -125,13 +98,13 @@ def create_schema(machine, **kwargs):
     )
     """ % (schema, schema))
 
-    inital_vector = machine.net.inital_vector()
+    initial_vector = machine.net.initial_vector()
 
     # KLUDGE: this seems to be a limitation of how default values are declared
     # this doesn't work when state vector has only one element
     # state %s.state DEFAULT (0), # FAILS
     # state %s.state DEFAULT (0,0), # WORKS
-    if len(inital_vector) < 2:
+    if len(initial_vector) < 2:
         raise Exception('state vector must be an n-tuple where n >= 2')
 
     txn.execute("""
@@ -142,7 +115,7 @@ def create_schema(machine, **kwargs):
       created timestamp DEFAULT now(),
       modified timestamp DEFAULT now()
     );
-    """ % (schema, schema, tuple(inital_vector), schema))
+    """ % (schema, schema, tuple(initial_vector), schema))
 
     txn.execute("""
     CREATE TABLE %s.transitions (
