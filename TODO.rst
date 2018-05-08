@@ -6,7 +6,7 @@ porting features from cyclone based project to autobahn/flask
 WIP
 ---
 
-fix/test event dispatch
+fix/test event dispatch issue where GUI click event doesn't result in a dispatch
 
 BACKLOG
 -------

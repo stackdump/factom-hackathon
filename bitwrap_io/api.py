@@ -44,10 +44,14 @@ class Rpc(Resource):
 class Dispatch(Resource):
 
     def post(self, schema, oid, action):
-        if request.data == '':
-          event = request.form.get('json')
+        if not request.data:
+            event = request.form.get('json')
         else:
-          event = request.data
+            event = request.data
+
+        if not event:
+            event = '{}'
+
         res = eventstore(schema)(oid=oid, action=action, payload=event)
         return res, 200, None
 
