@@ -22,7 +22,7 @@ class EchoServerProtocol(WebSocketServerProtocol):
         """ just return payload """
         self.sendMessage(payload, isBinary)
 
-app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../txbitwrap/templates')
+app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
 app.static_url_path = ''
 app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
 app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')

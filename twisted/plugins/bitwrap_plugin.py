@@ -5,7 +5,7 @@ from twisted.plugin import IPlugin
 from twisted.application.service import IServiceMaker
 from twisted.application import internet
 
-from txbitwrap.server import factory
+from bitwrap_io.server import factory
 
 class Options(usage.Options):
     # TODO: add other bitwrap options

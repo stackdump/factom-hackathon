@@ -39,7 +39,7 @@ def __onload(version=None, callback=None):
         dsl.__onload(config)
         ctl.__onload(dsl)
 
-        document['code'].value = "txbitwrap on %s %s\n>>> " % ( window.navigator.appName, window.navigator.appVersion)
+        document['code'].value = "bitwrap-io on %s %s\n>>> " % ( window.navigator.appName, window.navigator.appVersion)
         document['code'].value += "help(ctx)"
         document['code'].focus()
 
