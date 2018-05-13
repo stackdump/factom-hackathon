@@ -26,7 +26,6 @@ import traceback
 from browser import document as doc
 from browser import window, alert, console
 from browser.local_storage import storage
-import ctx
 
 LICENSE = """
 Redistribution and use in source and binary forms, with or without
@@ -53,11 +52,6 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
-# allow json interop from console
-null = None
-true = True
-false = False
 
 def clear():
     """ reload the console """
@@ -198,17 +192,14 @@ def myKeyDown(event):
             event.preventDefault()
             event.stopPropagation()
 
-def __onload(callback=None):
+def onload(callback=None):
     """ configure console and load bitwrap application context """
     doc['code'].bind('keypress', myKeyPress)
     doc['code'].bind('keydown', myKeyDown)
     doc['code'].bind('click', cursorToEnd)
+    doc['code'].value = "bitwrap-io on %s %s\n>>> " % ( window.navigator.appName, window.navigator.appVersion)
+    doc['code'].focus()
+    cursorToEnd()
 
-    def start(cfg):
-        if callable(callback):
-            callback(cfg, ctx)
-
-        cursorToEnd()
-
-    ctx.__onload(version=sys.implementation.version, callback=start)
-
+    if callable(callback):
+        callback(editor_ns);

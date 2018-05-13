@@ -2,22 +2,21 @@
 """
 import os
 from glob import glob
-import bitwrap_machine.pnml as petrinet
-import bitwrap_machine.dsl as dsl
+from bitwrap_io.machine import pnml as petrinet
+from bitwrap_io.machine import dsl
 
-PNML_PATH = os.environ.get('PNML_PATH', os.path.abspath(__file__ + '/../../schemata'))
 
 def set_pnml_path(pnml_dir):
-    global PNML_PATH
-    PNML_PATH = pnml_dir
+    """ set path to pnml source files """
+    PTNet.pnml_path = pnml_dir
 
 def schema_to_file(name):
     """ build schema filename from name """
-    return os.path.join(PNML_PATH, '%s.xml' % name)
+    return os.path.join(PTNet.pnml_path, '%s.xml' % name)
 
 def schema_files():
     """ list schema files """
-    return glob(PNML_PATH + '/*.xml')
+    return glob(PTNet.pnml_path + '/*.xml')
 
 def schema_list():
     """ list schema files """
@@ -25,6 +24,8 @@ def schema_list():
 
 class PTNet(object):
     """ p/t net """
+
+    pnml_path = os.environ.get('pnml_path', os.path.abspath(__file__ + '/../../../schemata'))
 
     def __init__(self, name):
         self.name = name

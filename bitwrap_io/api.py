@@ -9,19 +9,27 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
 
-import bitwrap_machine as pnml
+import bitwrap_io.machine as pnml
+from bitwrap_io.machine import ptnet
 from bitwrap_io.rpc import eventstore, call
-from bitwrap_machine import ptnet
 
-application = Flask(__name__)
-api = Api(application)
-CORS(application)
+app = Flask(__name__)
+api = Api(app)
+CORS(app)
 VERSION = 'v0.3.0'
+
+# TODO: does Resource allow for Etags?
 
 class Rpc(Resource):
 
     def post(self):
-        """ handle rpc calls """
+        """
+        handle rpc calls
+
+        will accept post body
+        or
+        form encoded request with a field called 'json'
+        """
         res = {}
         req = {}
 
@@ -52,7 +60,12 @@ class Dispatch(Resource):
         if not event:
             event = '{}'
 
-        res = eventstore(schema)(oid=oid, action=action, payload=event)
+        if type(event) is bytes:
+            _payload = event.decode('utf8')
+        else:
+            _payload = event
+
+        res = eventstore(schema)(oid=oid, action=action, payload=_payload)
         return res, 200, None
 
 class Event(Resource):
@@ -108,19 +121,24 @@ class Config(Resource):
         }
         return res, 200, None
 
-routes = [
-    dict(resource=Dispatch, urls=['/dispatch/<schema>/<oid>/<action>'], endpoint='dispatch'),
-    dict(resource=State, urls=['/state/<schema>/<oid>'], endpoint='state'),
-    dict(resource=Machine, urls=['/machine/<schema>'], endpoint='machine'),
-    dict(resource=Event, urls=['/event/<schema>/<eventid>'], endpoint='event'),
-    dict(resource=Stream, urls=['/stream/<schema>/<streamid>'], endpoint='stream'),
-    dict(resource=Schemata, urls=['/schemata'], endpoint='schemata'),
-    dict(resource=Rpc, urls=['/api'], endpoint='api'),
-    dict(resource=Config, urls=['/config/<stage>.json'], endpoint='config')
-]
+def __load_routes():
+    """ load resource routes """
 
-for route in routes:
-    api.add_resource(route.pop('resource'), *route.pop('urls'), **route)
+    routes = [
+        dict(resource=Dispatch, urls=['/dispatch/<schema>/<oid>/<action>'], endpoint='dispatch'),
+        dict(resource=State, urls=['/state/<schema>/<oid>'], endpoint='state'),
+        dict(resource=Machine, urls=['/machine/<schema>'], endpoint='machine'),
+        dict(resource=Event, urls=['/event/<schema>/<eventid>'], endpoint='event'),
+        dict(resource=Stream, urls=['/stream/<schema>/<streamid>'], endpoint='stream'),
+        dict(resource=Schemata, urls=['/schemata'], endpoint='schemata'),
+        dict(resource=Rpc, urls=['/api'], endpoint='api'),
+        dict(resource=Config, urls=['/config/<stage>.json'], endpoint='config')
+    ]
+
+    for route in routes:
+        api.add_resource(route.pop('resource'), *route.pop('urls'), **route)
+
+__load_routes()
 
 if __name__ == '__main__':
-    application.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=8080)

@@ -27,7 +27,7 @@ setup(
     keywords='PNML petri-net eventstore state-machine flask',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=[], # FIXME
+    install_requires=requirements,
     long_description=DESC,
     url="http://getbitwrap.com",
     classifiers=[

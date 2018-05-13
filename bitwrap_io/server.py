@@ -1,19 +1,21 @@
+# -*- coding: utf-8 -*-
 import os
 import uuid
-import sys
 
 from twisted.python import log
 from twisted.internet import reactor
 from twisted.web.server import Site
 from twisted.web.wsgi import WSGIResource
 
-from flask import request, g, session, flash, redirect, url_for, render_template, send_from_directory
-from flask_github import GitHub
-
 from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
 from autobahn.twisted.resource import WebSocketResource, WSGIRootResource
 
-from bitwrap_io.api import application as app
+from flask import request, g, session, flash, redirect, url_for, render_template, send_from_directory
+from flask_github import GitHub
+
+from bitwrap_io.api import app
+
+BRYTHON_FOLDER = os.path.abspath(os.path.dirname(__file__) + '/_brython')
 
 class EchoServerProtocol(WebSocketServerProtocol):
     """ Testing websocket echo """
@@ -26,17 +28,21 @@ app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates
 app.static_url_path = ''
 app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
 app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
-app.config['DEBUG'] = True
 
 github = GitHub(app)
 
 @app.route('/<path:path>')
 def send_brython(path):
-    return send_from_directory('../bitwrap_brython', path)
+    """ serve static brython files """
+    return send_from_directory(BRYTHON_FOLDER, path)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 @app.route('/login')
 def login():
@@ -61,22 +67,25 @@ def authorized(oauth_token):
 
 def factory(options):
     # TODO: update to accept args from options
-
     app.secret_key = str(uuid.uuid4())
 
-    #log.startLogging(sys.stdout)
-
-    # create a Twisted Web resource for our WebSocket server
-    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:8080") # TODO get from options
+    # TODO get from options for ip
+    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:8080")
     wsFactory.protocol = EchoServerProtocol
     wsResource = WebSocketResource(wsFactory)
 
-    # create a Twisted Web WSGI resource for our Flask server
+    # create a Twisted Web WSGI resource
     wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
 
     # create a root resource serving everything via WSGI/Flask, but
     # the path "/ws" served by our WebSocket stuff
     rootResource = WSGIRootResource(wsgiResource, {b'ws': wsResource})
 
-    # create a Twisted Web Site and run everything
     return Site(rootResource)
+
+if __name__ == '__main__':
+    from livereload import Server
+    app.debug = True
+    server = Server(app.wsgi_app)
+    server.watch('./bitwrap_io/_brython/')
+    server.serve(port=8080)

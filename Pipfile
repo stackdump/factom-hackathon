@@ -4,16 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+IPython = "*"
+livereload = "*"
 
 [packages]
-autobahn = "*"
-"pg8000" = "*"
-Twisted = "*"
-Flask = "*"
-Flask-Cors = "*"
-Flask-RESTful = "*"
-GitHub-Flask = "*"
-ipython = "*"
+autobahn = ">=18.4.1"
+"psycopg2-binary" = ">=2.7.4"
+Twisted = ">=18.4.0"
+Flask = ">=1.0.2"
+Flask-Cors = ">=3.0.4"
+Flask-RESTful = ">=0.3.6"
+GitHub-Flask = ">=3.2.0"
 
 [requires]
 python_version = "3.6"

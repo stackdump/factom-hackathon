@@ -1,7 +1,7 @@
 """
 load xml definitions as a bitwrap machine
 """
-from bitwrap_machine.ptnet import PTNet
+from bitwrap_io.machine.ptnet import PTNet
 
 class Machine(object):
     """ Use a petri-net as a state machine """

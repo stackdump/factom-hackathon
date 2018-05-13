@@ -5,16 +5,19 @@ usage:
 
     import bitwrap_io
     m = bitwrap_io.open('counter')
-    m(oid='foo', action='INC', payload={}) # dispatch an event
+    m(oid='foo', action='INC_0', payload={}) # dispatch an event
 
 """
 import sys
-import bitwrap_psql as psql
+import bitwrap_io.storage as psql
+from bitwrap_io.config import options
 
-_STORE = {}
 
 class EventStore(object):
     """ bitwrap_io.EventStore """
+
+    _store = {}
+    """ eventstore object cache """
 
     def __init__(self, schema, **kwargs):
         self.schema = schema.__str__()
@@ -24,10 +27,13 @@ class EventStore(object):
         """ execute a transformation """
         return self.storage.commit(request)
 
-def open(schema, **kwargs):
+def open(schema, **opts):
     """ open an evenstore by providing a schema name """
 
-    if not schema in _STORE:
-        _STORE[schema] = EventStore(schema, **kwargs)
+    if not opts:
+        opts = options()
 
-    return _STORE[schema]
+    if not schema in EventStore._store:
+        EventStore._store[schema] = EventStore(schema, **opts)
+
+    return EventStore._store[schema]

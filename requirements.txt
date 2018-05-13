@@ -1,7 +1,7 @@
-twisted
-autobahn
-flask
-flask-cors
-flask-restful
-github-flask
-pg8000
+Twisted>=18.4.0
+autobahn>=18.4.1
+Flask>=1.0.2
+Flask-Cors>=3.0.4
+Flask-RESTful>=0.3.6
+GitHub-Flask>=3.2.0
+psycopg2-binary>=2.7.4
