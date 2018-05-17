@@ -80,9 +80,9 @@ class Draw(object):
                     delta = handle.data('tx')
 
                     if symbol == 'place':
-                        _defs = INSTANCE.place_defs
+                        _defs = editor.instance.place_defs
                     elif symbol == 'transition':
-                        _defs = INSTANCE.transition_defs
+                        _defs = editor.instance.transition_defs
 
                     _coords = _defs[refid]['position']
                     _defs[refid]['position'] = [int(_coords[0] + delta[0]), int(_coords[1] + delta[1])]
@@ -352,7 +352,6 @@ class RenderMixin(object):
 
     def draw_handles(self):
         """ draw places and transitions """
-        console.log(self)
 
         for label, pl in self.places.items():
             self.handles[label] = Draw.handle(

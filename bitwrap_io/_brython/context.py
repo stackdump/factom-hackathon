@@ -34,7 +34,11 @@ class Context(object):
     @staticmethod
     def echo(req):
         """ write return value to consoel """
-        console.log(req.response)
+        try:
+            txt = getattr(req, 'response')
+            console.log(txt)
+        except:
+            console.log(req)
 
     @staticmethod
     def clear(txt=''):

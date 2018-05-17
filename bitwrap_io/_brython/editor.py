@@ -17,7 +17,6 @@ class EditorBase(object):
         self.schema = None
 
     def open(self, name):
-        self.ctx.log('opening net: %s' % name)
         self.schema = name
         self.ctx.machine(self.schema, callback=self.load)
 
@@ -67,8 +66,8 @@ class EditorEvents(EditorBase):
         if not refid:
             return
 
-        self.ctx.log('on_select', refid, symbol)
         # FIXME: should show info in editor
+        self.ctx.log('on_select', refid, symbol)
 
     def on_insert(self, event):
         """ insert a symbol into net """

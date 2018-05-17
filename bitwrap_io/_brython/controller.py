@@ -6,8 +6,13 @@ class Controller(object):
     def __init__(self, context=None, editor=None):
         self.editor = editor
         self.ctx = context
+        self.select_net = 'untitled'
+        self.onload()
+
+    def onload(self):
+        self.view(select_net='counter')
         self.ctx.schemata(callback=self.load_saved_nets)
-        self.view('octoe')
+        self.bind_controls()
 
     def load_saved_nets(self, req):
         """ load known schemata from server """
@@ -24,6 +29,12 @@ class Controller(object):
         el.html(''.join(options))
         el.change(lambda event: self.view(event.target.value))
 
-    def view(self, name):
-        self.selected_net = name
+    def bind_controls(self):
+        """ control editor instance """
+        self.ctx.jQuery('#netreload').on('click', lambda _: self.view())
+
+    def view(self, select_net=None):
+        if select_net:
+            self.selected_net = select_net
+
         self.editor.open(self.selected_net)
