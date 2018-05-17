@@ -11,7 +11,7 @@ def application(editor_ns):
     null = None
     true = True
     false = False
-    from ctx import Context
+    from context import Context
     self = Context()
     """, editor_ns)
 

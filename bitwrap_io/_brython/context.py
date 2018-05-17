@@ -1,17 +1,35 @@
 import json
-from browser import window, document as doc
+from browser import window, document
 from browser import websocket, ajax, console
-
-def onload():
-    console.log('context loaded')
-    """ TODO bind UI events """
+from controller import Controller
+from editor import Editor
 
 class Context(object):
+    """ application context object provides an interface to server-side api calls """
 
     def __init__(self):
-        # TODO load config by getting json file configed in window.Bitwrap.config
         self.seq = 0
-        self.endpoint = 'http://127.0.0.1:8080'
+        self.endpoint = ''
+        self.websocket = None
+        self.log = console.log
+        self.jQuery = window.jQuery
+        self._get(window.Bitwrap.config, self.configure)
+        self.doc = document
+
+    def time(self):
+        """ return time in microseconds """
+        return window.Date.now()
+
+    def configure(self, req):
+        """ load config from server """
+        _config = json.loads(req.text)
+        self.endpoint = _config['endpoint']
+
+        if _config.get('use_websocket', False):
+            # TODO lod websocket
+            console.log('websocket enabled')
+
+        Controller(context=self, editor=Editor(context=self, config=_config))
 
     @staticmethod
     def echo(req):
@@ -19,9 +37,9 @@ class Context(object):
         console.log(req.response)
 
     @staticmethod
-    def clear():
+    def clear(txt=''):
         """ clear python terminal """
-        doc['code'].value = ''
+        document['code'].value = txt
 
     def _rpc(self, method, params=[], callback=None, errback=None):
         """  _rpc(method, params=[], callback=None, errback=None): make JSONRPC POST to backend """

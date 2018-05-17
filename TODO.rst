@@ -1,15 +1,18 @@
 **last updated**
-Sun May 13 00:53:19 CDT 2018
+
+Wed May 16 09:13:53 CDT 2018
+----------------------------
 
 porting features from cyclone based project to autobahn/flask
+refactor GUI using latest brython/jquery/jquery UI/ snap libs
 
 WIP
 ---
-
-* refactor GUI using latest brython/jquery/jquery UI/ snap libs
+* fix editor commands/buttons
 
 BACKLOG
 -------
+* fix simulator - update token ledger + will need to get token count from bound element data
 
 * fix/test event dispatch issue where GUI click event doesn't result in a dispatch
 
