@@ -23,7 +23,7 @@ class EditorBase(object):
 
     def load(self, res):
         """ store requested PNML and render as SVG """
-        self.instance = PNet(json.loads(res.text))
+        self.instance = PNet(json.loads(res.text), editor=self)
         self.reset(callback=self.render)
 
     def reset(self, callback=None):
@@ -105,8 +105,8 @@ class EditorEvents(EditorBase):
     def on_trigger(self, event):
         """ callback when triggering a transition during a simulation """
         action = self.simulation.trigger(event)
-        self.ctx.log(net.SCHEMA, CTL.simulation.oid, action)
-        CTX.dispatch(net.SCHEMA, self.simulation.oid, action)
+        self.ctx.log(net.SCHEMA, self.simulation.oid, action)
+        self.instance.dispatch(net.SCHEMA, self.simulation.oid, action)
 
     def on_token_inc(self, event):
         return self._token_changed(1, event)

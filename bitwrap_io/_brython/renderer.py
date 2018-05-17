@@ -40,7 +40,7 @@ class Draw(object):
         })
 
     @staticmethod
-    def handle(x=0, y=50, size=40, refid=None, symbol=None, tokens=0):
+    def handle(x=0, y=50, size=40, refid=None, symbol=None, tokens=0, editor=None):
         """
         add group of elements needed for UI interaction
         here mouse events are bound to controler actions
@@ -66,11 +66,11 @@ class Draw(object):
 
         def _drag_start(x, y, evt):
             """ begin mouse interaction """
-            CTL.on_click(evt)
+            editor.on_click(evt)
 
         def _drag_end(evt):
             """ complete mouse interaction """
-            if not CTL.move_enabled:
+            if not editor.move_enabled:
                 return
 
             def _move_and_redraw():
@@ -89,13 +89,13 @@ class Draw(object):
                 except:
                     pass # skip if delta is not set
                 finally:
-                    CTL.render()
+                    editor.render()
 
-            CTL.reset(callback=_move_and_redraw)
+            editor.reset(callback=_move_and_redraw)
 
         def _dragging(dx, dy, x, y, event):
             """ svg transformation while dragging """
-            if not CTL.move_enabled:
+            if not editor.move_enabled:
                 return
 
             _tx = 't %i %i' % (dx, dy)
@@ -352,6 +352,7 @@ class RenderMixin(object):
 
     def draw_handles(self):
         """ draw places and transitions """
+        console.log(self)
 
         for label, pl in self.places.items():
             self.handles[label] = Draw.handle(
@@ -359,7 +360,8 @@ class RenderMixin(object):
                 y=float(pl.node.attributes.y2.value),
                 refid=label,
                 symbol='place',
-                tokens=pl.data('tokens')
+                tokens=pl.data('tokens'),
+                editor=self.editor
             )
 
         for label, tx in self.transitions.items():
@@ -367,7 +369,8 @@ class RenderMixin(object):
                 x=float(tx.node.attributes.x2.value),
                 y=float(tx.node.attributes.y2.value),
                 refid=label,
-                symbol='transition'
+                symbol='transition',
+                editor=self.editor
             )
 
     def draw_arcs(self):

@@ -7,9 +7,10 @@ class PNet(RenderMixin):
     data structure for rendering state machine source as a Petri-Net
     """
 
-    def __init__(self, source):
+    def __init__(self, source, editor=None):
         """ persistent Petri-Net object """ 
         self.net = source['machine']
+        self.editor = editor
 
         self.places = {}
         self.place_names = {}
