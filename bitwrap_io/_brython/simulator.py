@@ -3,12 +3,11 @@ class Simulation(object):
 
     def __init__(self, oid, editor):
         editor.ctx.log('loading simulation %s' % oid)
-        #FIXME
-        #self.pnet = net
-        #self.ctl = control
-        #self.history = []
-        #self.hilight_live_transitions()
-        #self.oid = oid
+        self.pnet = editor.instance
+        self.editor = editor
+        self.history = []
+        self.hilight_live_transitions()
+        self.oid = oid
 
     def state_vector(self):
         """ return current state vector from token_ledger """
@@ -48,7 +47,7 @@ class Simulation(object):
         """ callback to trigger live transition during simulation """
         target_id = str(event.target.id)
 
-        if not self.ctl.is_selectable(target_id):
+        if not self.editor.is_selectable(target_id):
             return
 
         refid, symbol = target_id.split('-')
@@ -59,18 +58,18 @@ class Simulation(object):
     def execute(self, action):
         if self.commit(action):
             self.history.append(action)
-            self.ctl.reset(callback=self.redraw)
+            self.editor.reset(callback=self.redraw)
 
         return action
 
     def reset(self):
         """ render SVG and hilight live transitions """
         self.pnet.reset_tokens()
-        self.ctl.reset(callback=self.ctl.render)
+        self.editor.reset(callback=self.editor.render)
 
     def redraw(self):
         """ render SVG and hilight live transitions """
-        self.ctl.render(callback=self.hilight_live_transitions)
+        self.editor.render(callback=self.hilight_live_transitions)
 
     def hilight_live_transitions(self):
         """ visually indiciate which transitions can fire """

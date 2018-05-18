@@ -1,6 +1,6 @@
 **last updated**
 
-Wed May 16 09:13:53 CDT 2018
+Thu May 17 23:28:04 CDT 2018
 ----------------------------
 
 porting features from cyclone based project to autobahn/flask
@@ -9,6 +9,8 @@ refactor GUI using latest brython/jquery/jquery UI/ snap libs
 WIP
 ---
 * fix editor commands/buttons
+  * +/- token not working - due to token values now set w/ data binding
+  * exec not working
 
 BACKLOG
 -------

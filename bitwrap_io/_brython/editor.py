@@ -104,8 +104,8 @@ class EditorEvents(EditorBase):
     def on_trigger(self, event):
         """ callback when triggering a transition during a simulation """
         action = self.simulation.trigger(event)
-        self.ctx.log(net.SCHEMA, self.simulation.oid, action)
-        self.instance.dispatch(net.SCHEMA, self.simulation.oid, action)
+        self.ctx.log(self.schema, self.simulation.oid, action)
+        self.ctx.dispatch(self.schema, self.simulation.oid, action)
 
     def on_token_inc(self, event):
         return self._token_changed(1, event)
@@ -216,11 +216,12 @@ class Editor(EditorEvents):
             self.ctx.clear(txt='>>>')
         else:
             self.move_enabled = False
-            oid = ctx.time()
+            oid = self.ctx.time()
             self.simulation = Simulation(oid, self)
-            CTX.create(net.SCHEMA, oid)
-            CTX.subscribe(str(net.SCHEMA), str(oid))
-            self.ctx.log(net.SCHEMA, oid, 'NEW')
+            self.ctx.create(self.schema, oid)
+            # FIXME add subscribe after websocket functions
+            #self.ctx.subscribe(str(self.schema), str(oid))
+            self.ctx.log(self.schema, oid, 'NEW')
             self.callback = self.on_trigger
 
     def tool(self, event):
