@@ -44,7 +44,8 @@ class Rpc(Resource):
             res['result'] = call(req['method'], req['params'])
             res['error'] = None
         except Exception as ex:
-            res = { 'id': req.get('id'), 'error': str(ex)}
+            msg = str(ex).splitlines()[0]
+            res = {'id': req.get('id'), 'error': msg}
 
         return res, 200, None
 

@@ -330,19 +330,22 @@ class RenderMixin(object):
         Draw.symbols['arrow'] = Draw._arrow()
         Draw.origin()
 
-    def render(self):
+    def render(self, token_ledger=None):
         """ draw the petri-net """
-        self.draw_nodes()
+        self.draw_nodes(token_ledger=token_ledger)
         self.draw_handles()
         self.draw_arcs()
 
-    def draw_nodes(self):
+    def draw_nodes(self, token_ledger=None):
         """ draw points used to align other elements """
 
         for name, attr in self.place_defs.items():
             el = Draw.place(attr['position'][0], attr['position'][1], label=name)
             el.data('offset', attr['offset'])
-            el.data('tokens', attr['initial']) 
+            if not token_ledger:
+                el.data('tokens', attr['initial']) 
+            else:
+                el.data('tokens', token_ledger[name]) 
 
             self.places[name] = el
 

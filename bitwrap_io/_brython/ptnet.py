@@ -55,10 +55,9 @@ class PNet(RenderMixin):
 
     def reset_tokens(self):
         """ rebuild token counters to initial state """
-        # FIXME somehow get leftovers when removing all elements
-        #self.token_ledger = {}
+        self.token_ledger = {}
 
-        for name, attr in NETS[SCHEMA]['places'].items():
+        for name, attr in self.net['places'].items():
             self.token_ledger[name] = attr['initial']
 
     def _new_place_name(self):

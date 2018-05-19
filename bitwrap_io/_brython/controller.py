@@ -7,10 +7,7 @@ class Controller(object):
         self.editor = editor
         self.ctx = context
         self.select_net = 'untitled'
-        self.onload()
-
-    def onload(self):
-        self.view(select_net='counter')
+        self.view(select_net='octoe')
         self.ctx.schemata(callback=self.load_saved_nets)
         self.bind_controls()
 

@@ -44,10 +44,12 @@ class Storage(object):
                 res = cur.fetchone()
                 return res[0]
 
-            except psycopg2.IntegrityError as ex:
+            except psycopg2.IntegrityError:
                 msg = 'INVALID_OUTPUT'
-            except psycopg2.InternalError as ex:
+            except psycopg2.InternalError:
                 msg = 'INVALID_INPUT'
+            except psycopg2.ProgrammingError as ex:
+                msg = str(ex).splitlines()[0]
 
             return {'oid': req['oid'], 'action': req['action'], '__err__': msg}
 

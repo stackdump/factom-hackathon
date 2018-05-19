@@ -35,7 +35,7 @@ class EditorBase(object):
 
     def render(self, callback=None):
         """ development examples """
-        self.instance.render()
+        self.instance.render(token_ledger=self.instance.token_ledger)
         self.json_view()
 
         if callable(callback):
@@ -50,7 +50,7 @@ class EditorBase(object):
             'token_ledger': self.instance.token_ledger
         })
 
-        self.ctx.jQuery('#json').JSONView(_info)
+        self.ctx.jQuery('#json').JSONView(_info, {'collapsed': True})
 
 class EditorEvents(EditorBase):
     """ Editor event callbacks """
