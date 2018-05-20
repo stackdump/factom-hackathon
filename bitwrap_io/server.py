@@ -56,10 +56,5 @@ def factory(options):
     return Site(rootResource)
 
 if __name__ == '__main__':
-    #app.debug = True
-    #socketio.run(app, use_reloader=True, log_output=True, port=8080)
-
-    from livereload import Server
-    server = Server(app.wsgi_app)
-    server.watch('./bitwrap_io/_brython/')
-    server.serve(port=8080)
+    app.debug = True
+    socketio.run(app, use_reloader=True, log_output=True, port=8080)
