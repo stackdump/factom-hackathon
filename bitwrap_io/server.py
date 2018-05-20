@@ -2,14 +2,7 @@
 import os
 import uuid
 
-from twisted.python import log
-from twisted.internet import reactor
-from twisted.web.server import Site
-from twisted.web.wsgi import WSGIResource
-
-from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
-from autobahn.twisted.resource import WebSocketResource, WSGIRootResource
-
+from flask_socketio import SocketIO
 from flask import request, g, session, flash, redirect, url_for, render_template, send_from_directory
 from flask_github import GitHub
 
@@ -17,19 +10,17 @@ from bitwrap_io.api import app
 
 BRYTHON_FOLDER = os.path.abspath(os.path.dirname(__file__) + '/_brython')
 
-class EchoServerProtocol(WebSocketServerProtocol):
-    """ Testing websocket echo """
-
-    def onMessage(self, payload, isBinary):
-        """ just return payload """
-        self.sendMessage(payload, isBinary)
-
 app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
 app.static_url_path = ''
 app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
 app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
 
+socketio = SocketIO(app)
 github = GitHub(app)
+
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ', message)
 
 @app.route('/<path:path>')
 def send_brython(path):
@@ -69,11 +60,6 @@ def factory(options):
     # TODO: update to accept args from options
     app.secret_key = str(uuid.uuid4())
 
-    # TODO get from options for ip
-    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:8080")
-    wsFactory.protocol = EchoServerProtocol
-    wsResource = WebSocketResource(wsFactory)
-
     # create a Twisted Web WSGI resource
     wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
 
@@ -84,8 +70,11 @@ def factory(options):
     return Site(rootResource)
 
 if __name__ == '__main__':
-    from livereload import Server
     app.debug = True
-    server = Server(app.wsgi_app)
-    server.watch('./bitwrap_io/_brython/')
-    server.serve(port=8080)
+    socketio.run(app, use_reloader=True, log_output=True, port=8080)
+
+    #from livereload import Server
+    #server = Server(app.wsgi_app)
+    #server = Server(socketio.wsgi_app)
+    #server.watch('./bitwrap_io/_brython/')
+    #server.serve(port=8080)

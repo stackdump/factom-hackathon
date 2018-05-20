@@ -1,8 +1,9 @@
 import json
 from browser import window, document
-from browser import websocket, ajax, console
+from browser import ajax, console
 from controller import Controller
 from editor import Editor
+from broker import Broker
 
 class Context(object):
     """ application context object provides an interface to server-side api calls """
@@ -28,6 +29,7 @@ class Context(object):
         if _config.get('use_websocket', False):
             # TODO lod websocket
             console.log('websocket enabled')
+            Broker(config=_config)
 
         Controller(context=self, editor=Editor(context=self, config=_config))
 

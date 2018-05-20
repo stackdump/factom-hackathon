@@ -4,17 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-IPython = "*"
-livereload = "*"
 
 [packages]
-autobahn = ">=18.4.1"
 "psycopg2-binary" = ">=2.7.4"
-Twisted = ">=18.4.0"
 Flask = ">=1.0.2"
+Flask-SocketIO = ">=3.0.0"
 Flask-Cors = ">=3.0.4"
 Flask-RESTful = ">=0.3.6"
 GitHub-Flask = ">=3.2.0"
+gevent-websocket = "*"
 
 [requires]
 python_version = "3.6"

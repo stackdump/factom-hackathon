@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-twistd -n bitwrap
+python bitwrap_io/server.py
