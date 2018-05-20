@@ -8,18 +8,15 @@ refactor GUI using latest brython/jquery/jquery UI/ snap libs
 
 WIP
 ---
-* fix editor commands/buttons
-  * +/- token not working - due to token values now set w/ data binding
-  * exec not working
+
+implementing socketio for notify events
 
 BACKLOG
 -------
-* fix simulator - update token ledger + will need to get token count from bound element data
 
-* fix/test event dispatch issue where GUI click event doesn't result in a dispatch
+github auth doesn't work currently:
 
-* fix Websocket connection 'should use /ws'
-  * should route all commits to websocket (for development mode)
+    RecursionError: maximum recursion depth exceeded while calling a Python object
 
 * provide 2 application configurations development & production modes
   * development listens to all websocket events

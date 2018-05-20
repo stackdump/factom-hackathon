@@ -2,21 +2,11 @@
 import os
 import uuid
 
-from flask_socketio import SocketIO
 from flask import request, g, session, flash, redirect, url_for, render_template, send_from_directory
-from flask_github import GitHub
 
-from bitwrap_io.api import app
+from bitwrap_io.api import app, socketio, github
 
 BRYTHON_FOLDER = os.path.abspath(os.path.dirname(__file__) + '/_brython')
-
-app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
-app.static_url_path = ''
-app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
-app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
-
-socketio = SocketIO(app)
-github = GitHub(app)
 
 @socketio.on('message')
 def handle_message(message):
@@ -30,10 +20,6 @@ def send_brython(path):
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 @app.route('/login')
 def login():
@@ -70,11 +56,10 @@ def factory(options):
     return Site(rootResource)
 
 if __name__ == '__main__':
-    app.debug = True
-    socketio.run(app, use_reloader=True, log_output=True, port=8080)
+    #app.debug = True
+    #socketio.run(app, use_reloader=True, log_output=True, port=8080)
 
-    #from livereload import Server
-    #server = Server(app.wsgi_app)
-    #server = Server(socketio.wsgi_app)
-    #server.watch('./bitwrap_io/_brython/')
-    #server.serve(port=8080)
+    from livereload import Server
+    server = Server(app.wsgi_app)
+    server.watch('./bitwrap_io/_brython/')
+    server.serve(port=8080)

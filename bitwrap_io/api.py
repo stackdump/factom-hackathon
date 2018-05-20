@@ -8,14 +8,25 @@ import json
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO
+from flask_github import GitHub
 
 import bitwrap_io.machine as pnml
 from bitwrap_io.machine import ptnet
 from bitwrap_io.rpc import eventstore, call
 
 app = Flask(__name__)
-api = Api(app)
+
+app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
+app.static_url_path = ''
+app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
+app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
+
 CORS(app)
+api = Api(app)
+socketio = SocketIO(app)
+github = GitHub(app)
+
 VERSION = 'v0.3.0'
 
 # TODO: does Resource allow for Etags?
