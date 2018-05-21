@@ -5,10 +5,11 @@ Provide resources for bitwrap HTTP API
 import os
 import json
 
+import socketio
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
-from flask_socketio import SocketIO
 from flask_github import GitHub
 
 import bitwrap_io.machine as pnml
@@ -24,7 +25,7 @@ app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
 
 CORS(app)
 api = Api(app)
-socketio = SocketIO(app)
+sio = socketio.Server()
 github = GitHub(app)
 
 VERSION = 'v0.3.0'

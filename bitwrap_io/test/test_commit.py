@@ -1,4 +1,4 @@
-from twisted.trial.unittest import TestCase
+from unittest  import TestCase
 from bitwrap_io import rpc
 
 class CommitTest(TestCase):

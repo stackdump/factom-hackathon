@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 import os
+import eventlet
+import eventlet.wsgi
 import uuid
 
 from flask import request, g, session, flash, redirect, url_for, render_template, send_from_directory
 
-from bitwrap_io.api import app, socketio, github
+import socketio
+
+from bitwrap_io.api import app, sio, github
 
 BRYTHON_FOLDER = os.path.abspath(os.path.dirname(__file__) + '/_brython')
 
-@socketio.on('message')
-def handle_message(message):
-    print('received message: ', message)
+@sio.on('message')
+def handle_message(sid, data):
+    print('received message: ', data)
 
 @app.route('/<path:path>')
 def send_brython(path):
@@ -45,16 +49,9 @@ def authorized(oauth_token):
 def factory(options):
     # TODO: update to accept args from options
     app.secret_key = str(uuid.uuid4())
-
-    # create a Twisted Web WSGI resource
-    wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
-
-    # create a root resource serving everything via WSGI/Flask, but
-    # the path "/ws" served by our WebSocket stuff
-    rootResource = WSGIRootResource(wsgiResource, {b'ws': wsResource})
-
-    return Site(rootResource)
+    #wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
+    #return Site(rootResource)
 
 if __name__ == '__main__':
-    app.debug = True
-    socketio.run(app, use_reloader=True, log_output=True, port=8080)
+    sioapp = socketio.Middleware(sio, app)
+    eventlet.wsgi.server(eventlet.listen(('', 8080)), sioapp)

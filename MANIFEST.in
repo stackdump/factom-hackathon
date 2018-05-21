@@ -1,4 +1,3 @@
-recursive-include twisted *.py
-recursive-include schemata *.xml
 recursive-include bitwrap_io *.*
-recursive-include bitwrap_psql *.py
+recursive-include templates *.html
+recursive-include schemata *.xml
