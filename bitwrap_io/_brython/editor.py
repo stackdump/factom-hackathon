@@ -213,7 +213,7 @@ class Editor(EditorEvents):
                 self.simulation.reset()
             self.callback = self.on_select
             self.move_enabled = True
-            self.ctx.clear(txt='>>>')
+            self.ctx.clear(txt='>>> ')
         else:
             self.move_enabled = False
             oid = self.ctx.time()

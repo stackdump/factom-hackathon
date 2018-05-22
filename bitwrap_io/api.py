@@ -25,14 +25,27 @@ app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
 
 CORS(app)
 api = Api(app)
-sio = socketio.Server()
+sio = socketio.Server(async_mode='eventlet', cookie='bitwrap')
 github = GitHub(app)
 
 VERSION = 'v0.3.0'
 
-# TODO: does Resource allow for Etags?
+def commit(schema, oid, action, payload):
+    """ append event to eventstore """
+
+    res = eventstore(schema)(oid=oid, action=action, payload=payload)
+    res['action'] = action
+    sio.emit('commit', res)
+    return res
+
+@sio.on('dispatch')
+def dispatch(sid, evt):
+    """ handle event commit over socketio """
+    commit(evt['schema'], evt['oid'], evt['action'], evt['payload'])
 
 class Rpc(Resource):
+    """ handle rpc call """
+    # TODO: enforce permissions
 
     def post(self):
         """
@@ -63,6 +76,7 @@ class Rpc(Resource):
 
 
 class Dispatch(Resource):
+    """ dispatch event over REST api """
 
     def post(self, schema, oid, action):
         if not request.data:
@@ -74,20 +88,23 @@ class Dispatch(Resource):
             event = '{}'
 
         if type(event) is bytes:
-            _payload = event.decode('utf8')
+            payload = event.decode('utf8')
         else:
-            _payload = event
+            payload = event
 
-        res = eventstore(schema)(oid=oid, action=action, payload=_payload)
+        res = commit(schema, oid, action, payload)
+
         return res, 200, None
 
 class Event(Resource):
+    """ fetch specific event by eventid """
 
     def get(self, schema, eventid):
         res = eventstore(schema).storage.db.events.fetch(eventid)
         return res, 200, None
 
 class Machine(Resource):
+    """ get state machine defs """
 
     def get(self, schema):
         machine = pnml.Machine(schema)
@@ -102,25 +119,28 @@ class Machine(Resource):
         return res, 200, None
 
 class Schemata(Resource):
+    """ get list of state machine schemata """
 
     def get(self):
         res = {'schemata': ptnet.schema_list()}
         return res, 200, None
 
 class State(Resource):
+    """ get state of a given stream """
 
     def get(self, schema, oid):
         res = eventstore(schema).storage.db.states.fetch(oid)
         return res, 200, None
 
 class Stream(Resource):
+    """ retrieve a stream of events by stream oid """
 
-    def get(self, schema, streamid):
-        res = eventstore(schema).storage.db.events.fetchall(streamid)
+    def get(self, schema, stream_oid):
+        res = eventstore(schema).storage.db.events.fetchall(stream_oid)
         return res, 200, None
 
 class Config(Resource):
-    """ config """
+    """ config browser app """
 
     def get(self, stage):
         """ direct web app to api """

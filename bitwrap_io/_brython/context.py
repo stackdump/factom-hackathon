@@ -11,7 +11,7 @@ class Context(object):
     def __init__(self):
         self.seq = 0
         self.endpoint = ''
-        self.websocket = None
+        self.broker = Broker
         self.log = console.log
         self.jQuery = window.jQuery
         self._get(window.Bitwrap.config, self.configure)
@@ -27,9 +27,7 @@ class Context(object):
         self.endpoint = _config['endpoint']
 
         if _config.get('use_websocket', False):
-            # TODO lod websocket
-            console.log('websocket enabled')
-            Broker(config=_config)
+            self.broker(config=_config)
 
         Controller(context=self, editor=Editor(context=self, config=_config))
 
@@ -83,8 +81,19 @@ class Context(object):
         """ machine(schema, callback=None): get machine definition """
         self._get('/machine/%s' % schema, callback=callback)
 
-    def dispatch(self, schema, oid, action, payload={}, callback=None):
-        """ dispatch(schema, oid, action, payload={}, callback=None): dispatch new event to endpoint  """
+    def dispatch(self, schema, oid, action, payload={}):
+        """ dispatch(schema, oid, action, payload={}): dispatch new event to socketio  """
+        if not self.broker.socket:
+            console.error('broker disabled')
+            return
+
+        self.broker.socket.emit(
+            'dispatch',
+            {'schema': schema, 'oid': oid, 'action': action, 'payload': payload}
+        )
+
+    def commit(self, schema, oid, action, payload={}, callback=None):
+        """ commit(schema, oid, action, payload={}, callback=None): post new event to api  """
         req = ajax.ajax()
 
         if callback:

@@ -1,31 +1,19 @@
 **last updated**
 
-Thu May 17 23:28:04 CDT 2018
+Tue May 22 00:20:54 CDT 2018
 ----------------------------
-
-porting features from cyclone based project to autobahn/flask
-refactor GUI using latest brython/jquery/jquery UI/ snap libs
 
 WIP
 ---
 
-implementing socketio for notify events
+* update brython app enhance PetriNet  editor
+  * support clickable handles on arcs
+  * allow arc creation with > 1 token weight
 
 BACKLOG
 -------
 
-github auth doesn't work currently:
-
-    RecursionError: maximum recursion depth exceeded while calling a Python object
-
-* provide 2 application configurations development & production modes
-  * development listens to all websocket events
-  * production is bound by session
-
-
-ICEBOX
--------
-* build a websocket dispatcher/session manager
+* enforce Auth via rest API & socketio connections
   * allow end users to bind listeners to specific schema/oid combos
 
 * ACL on schema creation / all RPC commands
@@ -34,19 +22,16 @@ ICEBOX
   * require auth to save (on s3? / filesystem)
   * allow user-created schemata
 
-* update brython app enhance PetriNet  editor
-  * should install via bitwrap-ui python package
-  * edit update properties on select
-  * support clickable handles on arcs
-  * allow arc creation with > 1 token weight
+ICEBOX
+-------
 
 * remove all other string substitions from ./storage/postgres.py
   in favor of using composable features of psycopg2 :
   http://initd.org/psycopg/docs/sql.html#psycopg2.sql.SQL.join
   http://initd.org/psycopg/docs/sql.html#psycopg2.sql.Placeholder
 
-* allow users to run only the API serving w/ twisted (production mode)
-  * consider making the editor into an Admin UI
-
 * re-examine use of 'roles' - leveraging inhibitor arcs
   * enhance or remove feature
+
+* consider relocating /index to /editor or /admin
+  * also allow api-only mode - to be deployed without editor enabled
