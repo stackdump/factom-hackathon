@@ -21,6 +21,7 @@ class PNet(RenderMixin):
 
         self.arcs = []
         self.arc_defs = {}
+        self.arc_weights = {}
 
         self.transition_defs = {}
         self.transitions = {}
@@ -44,18 +45,48 @@ class PNet(RenderMixin):
             if name not in self.arc_defs:
                 self.arc_defs[name] = { 'to': [], 'from': [] }
 
-            for i in range(0, self.vector_size):
-                if attr['delta'][i] > 0:
-                    self.arc_defs[name]['to'].append(self.place_names[i])
+            # TODO: eventually rename back to arc_defs
+            # once refactor is in place
+            if name not in self.arc_weights:
+                self.arc_weights[name] = []
 
-                elif attr['delta'][i] < 0:
+            for i in range(0, self.vector_size):
+                delta = attr['delta'][i]
+
+                if delta == 0:
+                    continue
+
+                place = self.place_names[i]
+
+                if delta > 0:
+                    self.arc_defs[name]['to'].append(place)
+                    arc_transaction = {
+                        'source': name,
+                        'target': place,
+                        'weight': delta,
+                        'offset': i,
+                        'delta': delta
+                    }
+
+                elif delta < 0:
                     self.arc_defs[name]['from'].append(self.place_names[i])
+                    arc_transaction = {
+                        'target': place,
+                        'source': name,
+                        'weight': 0 - delta,
+                        'offset': i,
+                        'delta': delta
+                    }
+
+                self.arc_weights[name].append(arc_transaction)
 
             self.transition_defs[name] = attr
 
     def reset_tokens(self):
         """ rebuild token counters to initial state """
-        self.token_ledger = {}
+        # FIXME: clearing all ledger entries causes an error when a petri-net
+        # def is created in the browser rather than loaded from the server
+        #self.token_ledger = {}
 
         for name, attr in self.net['places'].items():
             self.token_ledger[name] = attr['initial']

@@ -5,6 +5,7 @@ name = "pypi"
 
 [dev-packages]
 ipython = "*"
+livereload = "*"
 
 [packages]
 "psycopg2-binary" = ">=2.7.4"
@@ -14,7 +15,6 @@ Flask-RESTful = ">=0.3.6"
 GitHub-Flask = ">=3.2.0"
 python-socketio = "*"
 eventlet = "*"
-
 
 [requires]
 python_version = "3.6"

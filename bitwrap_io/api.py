@@ -142,6 +142,9 @@ class Stream(Resource):
 class Config(Resource):
     """ config browser app """
 
+    use_websocket = True
+    """ flag used by front-end to decide whether to use websocket """
+
     def get(self, stage):
         """ direct web app to api """
 
@@ -149,7 +152,7 @@ class Config(Resource):
             'endpoint': os.environ.get('ENDPOINT', ''),
             'version': VERSION,
             'stage': stage,
-            'use_websocket': True
+            'use_websocket': self.use_websocket
         }
         return res, 200, None
 

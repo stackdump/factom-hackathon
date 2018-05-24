@@ -46,12 +46,7 @@ def authorized(oauth_token):
     #db_session.commit()
     return redirect(next_url)
 
-def factory(options):
-    # TODO: update to accept args from options
-    app.secret_key = str(uuid.uuid4())
-    #wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
-    #return Site(rootResource)
-
 if __name__ == '__main__':
+    app.secret_key = str(uuid.uuid4())
     sioapp = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 8080)), sioapp)

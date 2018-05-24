@@ -105,7 +105,19 @@ class EditorEvents(EditorBase):
         """ callback when triggering a transition during a simulation """
         action = self.simulation.trigger(event)
         self.ctx.log(self.schema, self.simulation.oid, action)
-        self.ctx.dispatch(self.schema, self.simulation.oid, action)
+        self.ctx.dispatch(self.schema, self.simulation.oid, action, payload={}, callback=self.on_commit)
+
+    def on_commit(self, res_or_msg):
+        """
+        callback for receiving an upstream event
+        res could be a callback after an ajax response or a socketio message from server
+        """
+        if hasattr(res_or_msg, 'response'):
+            event = json.loads(res_or_msg.response)
+        else:
+            event = res_or_msg
+
+        self.ctx.log('ONCOMMIT', event)
 
     def on_token_inc(self, event):
         return self._token_changed(1, event)

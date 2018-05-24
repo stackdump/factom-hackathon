@@ -4,9 +4,16 @@ class Broker(object):
 
     socket = None
 
-    def __init__(self, config=None):
-        Broker.socket = window.io.connect('http://127.0.0.1:8080')
-        Broker.socket.on('commit', self.on_commit)
+    def __init__(self, config=None, editor=None):
+        Broker.socket = window.io.connect('')
+        Broker.socket.on('commit', editor.on_commit)
 
-    def on_commit(self, msg):
-        console.log(msg)
+    @staticmethod
+    def commit(schema, oid, action, payload=None):
+        if not payload:
+            payload = {}
+
+        Broker.socket.emit(
+            'dispatch',
+            {'schema': schema, 'oid': oid, 'action': action, 'payload': payload}
+        )

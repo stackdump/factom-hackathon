@@ -56,13 +56,28 @@ class Draw(object):
            el.data('refid', refid)
            token_el = Draw._tokens(refid, value=tokens)
            handle.add(el, token_el)
-
         elif symbol == 'transition':
            el = Draw._transition(x=x, y=y, size=size, refid=refid, symbol=symbol)
            handle.add(el)
 
         el.data('refid', refid)
         Draw.symbols[_id] = handle
+
+        def _move_and_redraw():
+            """ trigger action in UI """
+
+            try:
+                delta = handle.data('tx')
+
+                if symbol == 'place':
+                    _defs = editor.instance.place_defs
+                elif symbol == 'transition':
+                    _defs = editor.instance.transition_defs
+
+                _coords = _defs[refid]['position']
+                _defs[refid]['position'] = [int(_coords[0] + delta[0]), int(_coords[1] + delta[1])]
+            finally:
+                editor.render()
 
         def _drag_start(x, y, evt):
             """ begin mouse interaction """
@@ -72,24 +87,6 @@ class Draw(object):
             """ complete mouse interaction """
             if not editor.move_enabled:
                 return
-
-            def _move_and_redraw():
-                """ trigger action in UI """
-
-                try:
-                    delta = handle.data('tx')
-
-                    if symbol == 'place':
-                        _defs = editor.instance.place_defs
-                    elif symbol == 'transition':
-                        _defs = editor.instance.transition_defs
-
-                    _coords = _defs[refid]['position']
-                    _defs[refid]['position'] = [int(_coords[0] + delta[0]), int(_coords[1] + delta[1])]
-                except:
-                    pass # skip if delta is not set
-                finally:
-                    editor.render()
 
             editor.reset(callback=_move_and_redraw)
 
@@ -389,6 +386,9 @@ class RenderMixin(object):
                 for label in attrs['from']:
                     el = Draw.arc(label, txn)
                     self.arcs.append(el)
+
+            # FIXME render using arc_weights instead
+            #console.log(txn, self.arc_weights[txn])
 
 def _attr(sym):
     """ access attributes of an existing symbol """

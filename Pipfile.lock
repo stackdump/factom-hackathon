@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "dabcc705a7a6a50a2c4f6ae4061ceac3e34268f12daa474d5ed5ec65e745d576"
+            "sha256": "b7ff85a4f8d88b9f53e9f6febc9b04229202258b124b40012f9bd57407b6c15c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -252,6 +252,14 @@
             ],
             "version": "==0.12.0"
         },
+        "livereload": {
+            "hashes": [
+                "sha256:583179dc8d49b040a9da79bd33de59e160d2a8802b939e304eb359a4419f6498",
+                "sha256:dd4469a8f5a6833576e9f5433f1439c306de15dbbfeceabd32479b1123380fa5"
+            ],
+            "index": "pypi",
+            "version": "==2.5.2"
+        },
         "parso": {
             "hashes": [
                 "sha256:cdef26e8adc10d589f3ec4eb444bd0a29f3f1eb6d72a4292ab8afcb9d68976a6",
@@ -308,6 +316,16 @@
                 "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
             ],
             "version": "==1.11.0"
+        },
+        "tornado": {
+            "hashes": [
+                "sha256:1b83d5c10550f2653380b4c77331d6f8850f287c4f67d7ce1e1c639d9222fbc7",
+                "sha256:408d129e9d13d3c55aa73f8084aa97d5f90ed84132e38d6932e63a67d5bec563",
+                "sha256:88ce0282cce70df9045e515f578c78f1ebc35dcabe1d70f800c3583ebda7f5f5",
+                "sha256:ba9fbb249ac5390bff8a1d6aa4b844fd400701069bda7d2e380dfe2217895101",
+                "sha256:c050089173c2e9272244bccfb6a8615fb9e53b79420a5551acfa76094ecc3111"
+            ],
+            "version": "==5.0.2"
         },
         "traitlets": {
             "hashes": [

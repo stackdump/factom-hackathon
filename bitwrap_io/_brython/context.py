@@ -25,11 +25,12 @@ class Context(object):
         """ load config from server """
         _config = json.loads(req.text)
         self.endpoint = _config['endpoint']
+        _editor = Editor(context=self, config=_config)
 
         if _config.get('use_websocket', False):
-            self.broker(config=_config)
+            self.broker(config=_config, editor=_editor)
 
-        Controller(context=self, editor=Editor(context=self, config=_config))
+        Controller(context=self, editor=_editor)
 
     @staticmethod
     def echo(req):
@@ -81,16 +82,12 @@ class Context(object):
         """ machine(schema, callback=None): get machine definition """
         self._get('/machine/%s' % schema, callback=callback)
 
-    def dispatch(self, schema, oid, action, payload={}):
+    def dispatch(self, schema, oid, action, payload={}, callback=None):
         """ dispatch(schema, oid, action, payload={}): dispatch new event to socketio  """
-        if not self.broker.socket:
-            console.error('broker disabled')
-            return
-
-        self.broker.socket.emit(
-            'dispatch',
-            {'schema': schema, 'oid': oid, 'action': action, 'payload': payload}
-        )
+        if self.broker.socket:
+            self.broker.commit(schema, oid, action, payload=payload)
+        else:
+            self.commit(schema, oid, action, payload=payload, callback=callback)
 
     def commit(self, schema, oid, action, payload={}, callback=None):
         """ commit(schema, oid, action, payload={}, callback=None): post new event to api  """
