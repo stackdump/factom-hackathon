@@ -21,7 +21,6 @@ class PNet(RenderMixin):
 
         self.arcs = []
         self.arc_defs = {}
-        self.arc_weights = {}
 
         self.transition_defs = {}
         self.transitions = {}
@@ -42,13 +41,9 @@ class PNet(RenderMixin):
         self.vector_size = len(self.place_defs)
 
         for name, attr in self.net['transitions'].items():
-            if name not in self.arc_defs:
-                self.arc_defs[name] = { 'to': [], 'from': [] }
-
-            # TODO: eventually rename back to arc_defs
             # once refactor is in place
-            if name not in self.arc_weights:
-                self.arc_weights[name] = []
+            if name not in self.arc_defs:
+                self.arc_defs[name] = []
 
             for i in range(0, self.vector_size):
                 delta = attr['delta'][i]
@@ -59,7 +54,6 @@ class PNet(RenderMixin):
                 place = self.place_names[i]
 
                 if delta > 0:
-                    self.arc_defs[name]['to'].append(place)
                     arc_transaction = {
                         'source': name,
                         'target': place,
@@ -69,16 +63,15 @@ class PNet(RenderMixin):
                     }
 
                 elif delta < 0:
-                    self.arc_defs[name]['from'].append(self.place_names[i])
                     arc_transaction = {
-                        'target': place,
-                        'source': name,
+                        'source': place,
+                        'target': name,
                         'weight': 0 - delta,
                         'offset': i,
                         'delta': delta
                     }
 
-                self.arc_weights[name].append(arc_transaction)
+                self.arc_defs[name].append(arc_transaction)
 
             self.transition_defs[name] = attr
 
@@ -193,12 +186,7 @@ class PNet(RenderMixin):
 
     def delete_arcs_for_symbol(self, refid):
         """ remove arcs associated with a given place or transition """
-
-        # FIXME doesn't remove arc consistently
-        # REVIEW: does this problem persist?
-        for label, attrs in self.arc_defs.items():
-            if refid in attrs['to']:
-                self.arc_defs[label]['to'].remove(refid)
-
-            if refid in attrs['from']:
-                self.arc_defs[label]['from'].remove(refid)
+        for label, txns in self.arc_defs.items():
+            for i, txn in enumerate(txns):
+                if refid == txn['target'] or refid == txn['source']:
+                    del self.arc_defs[label][i]

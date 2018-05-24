@@ -375,20 +375,13 @@ class RenderMixin(object):
     def draw_arcs(self):
         """ draw the petri-net """
 
-        for txn, attrs in self.arc_defs.items():
-
-            if attrs['to']:
-                for label in attrs['to']:
-                    el = Draw.arc(txn, label)
-                    self.arcs.append(el)
-
-            if attrs['from']:
-                for label in attrs['from']:
-                    el = Draw.arc(label, txn)
-                    self.arcs.append(el)
-
-            # FIXME render using arc_weights instead
-            #console.log(txn, self.arc_weights[txn])
+        for label, txns in self.arc_defs.items():
+            for txn in txns:
+                el = Draw.arc(txn['source'], txn['target'])
+                el.data('weight', txn['weight'])
+                el.data('offset', txn['offset'])
+                el.data('delta', txn['delta'])
+                self.arcs.append(el)
 
 def _attr(sym):
     """ access attributes of an existing symbol """

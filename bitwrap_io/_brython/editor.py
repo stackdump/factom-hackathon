@@ -67,7 +67,7 @@ class EditorEvents(EditorBase):
             return
 
         # FIXME: should show info in editor
-        self.ctx.log('on_select', refid, symbol)
+        #self.ctx.log('on_select', refid, symbol)
 
     def on_insert(self, event):
         """ insert a symbol into net """
@@ -168,26 +168,34 @@ class EditorEvents(EditorBase):
             return # cannot connect 2 symbols of same type
 
         if begin[1] == 'transition':
-            txn = begin[0]
-            place = end[0]
-            direction = 'to'
+            txn_label = begin[0]
+            offset = self.instance.place_defs[end[0]]['offset']
             diff = 1
+            arc_transaction = {
+               'source': begin[0],
+               'target': end[0],
+               'weight': 1,
+               'offset': offset,
+               'delta': diff
+            }
         else:
-            txn = end[0]
-            place = begin[0]
-            direction = 'from'
+            txn_label = begin[1]
+            offset = self.instance.place_defs[begin[0]]['offset']
             diff = -1
+            arc_transaction = {
+              'source': begin[0],
+              'target': end[0],
+              'weight': 1,
+              'offset': offset,
+              'delta': diff
+            }
 
-        if txn not in self.instance.arc_defs:
-            self.instance.arc_defs[txn] = {'to': [], 'from': []}
+        if txn_label not in self.instance.arc_defs:
+            self.instance.arc_defs[txn_label] = []
 
-        self.instance.arc_defs[txn][direction].append(place)
-
-        offset = self.instance.place_defs[place]['offset']
-        self.instance.transition_defs[txn]['delta'][offset] = diff
-
+        self.instance.arc_defs[txn_label].append(arc_transaction)
+        self.instance.transition_defs[txn_label]['delta'][offset] = diff
         self.selected_arc_endpoint = None # reset
-
         self.reset(callback=self.render)
 
 

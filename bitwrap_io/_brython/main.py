@@ -1,7 +1,5 @@
 """ main app entrypoint """
 
-# TODO: refactor existing brython petri-net editor to work w/ latest brython
-
 import terminal
 
 def application(editor_ns):
