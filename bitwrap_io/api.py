@@ -64,6 +64,9 @@ class Rpc(Resource):
             else:
               payload = request.data
 
+            if type(payload) is bytes:
+                payload = payload.decode('utf8')
+
             req = json.loads(payload)
             res['id'] = req.get('id')
             res['result'] = call(req['method'], req['params'])
