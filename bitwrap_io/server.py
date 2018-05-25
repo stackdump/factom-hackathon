@@ -49,4 +49,4 @@ def authorized(oauth_token):
 if __name__ == '__main__':
     app.secret_key = str(uuid.uuid4())
     sioapp = socketio.Middleware(sio, app)
-    eventlet.wsgi.server(eventlet.listen(('', 8080)), sioapp)
+    eventlet.wsgi.server(eventlet.listen(('127.0.0.1', 8080)), sioapp)
