@@ -3,10 +3,13 @@
 from livereload import Server
 
 import bitwrap_io.server
-from bitwrap_io.api import app, Config
+from bitwrap_io.api import Config
+from bitwrap_io.server import app, pnml_editor
 
 # run livereload for brython development
 if __name__ == '__main__':
+    pnml_editor(app)
+
     # livereload is not compatible with socketio
     # so disable websocket usage
     Config.use_websocket = False

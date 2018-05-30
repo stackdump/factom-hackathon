@@ -1,6 +1,6 @@
 **last updated**
 
-Thu May 24 02:24:09 CDT 2018
+Wed May 30 07:52:17 CDT 2018
 ----------------------------
 
 WIP
@@ -10,24 +10,28 @@ WIP
 
   * support clickable handles on arcs
   * allow arc creation with > 1 token weight
-  * test/fix issue where simulation errors after removing elements from an existing net (tested w/ octoe)
 
 BACKLOG
 -------
 
-* enforce Auth via rest API & socketio connections
-
-  * allow end users to bind listeners to specific schema/oid combos
-
 * ACL on schema creation / all RPC commands
+* upload new schemata & convert to pnml from editor with 'save' button
 
-* add feature to save petri-net designs
-
-  * require auth to save (on s3? / filesystem)
-  * allow user-created schemata
+* consider if we need to refactor github auth to make it optional
+  * use case is: I want to host an API server to just use JWT bearer tokens
 
 ICEBOX
 -------
+
+* fork to create gitwrap.com - hosted editing and testing of petri-nets
+
+  * enforce Auth via rest API & socketio connections
+  * allow user-created schemata - ( saved in db or s3 )
+  * add feature to save petri-net designs
+  * require auth to save (on s3? / filesystem)
+  * no guarenteed db storage (maybe publish events to s3 bucket)
+  * allow end users to bind listeners to specific schema/oid combos
+  * POC feature to save petri-net designs (no auth)
 
 * remove all other string substitions 
 
@@ -40,6 +44,3 @@ ICEBOX
 
   * enhance or remove feature
 
-* consider relocating /index to /editor or /admin
-
-   * also allow api-only mode - to be deployed without editor enabled

@@ -10,23 +10,13 @@ import socketio
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS, cross_origin
-from flask_github import GitHub
 
 import bitwrap_io.machine as pnml
 from bitwrap_io.machine import ptnet
 from bitwrap_io.rpc import eventstore, call
 
 app = Flask(__name__)
-
-app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
-app.static_url_path = ''
-app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID')
-app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET')
-
-CORS(app)
-api = Api(app)
 sio = socketio.Server(async_mode='eventlet', cookie='bitwrap')
-github = GitHub(app)
 
 VERSION = 'v0.3.0'
 
@@ -159,8 +149,10 @@ class Config(Resource):
         }
         return res, 200, None
 
-def __load_routes():
+def bitwrap_api(app):
     """ load resource routes """
+    CORS(app)
+    api = Api(app)
 
     routes = [
         dict(resource=Dispatch, urls=['/dispatch/<schema>/<oid>/<action>'], endpoint='dispatch'),
@@ -176,7 +168,4 @@ def __load_routes():
     for route in routes:
         api.add_resource(route.pop('resource'), *route.pop('urls'), **route)
 
-__load_routes()
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    return api
