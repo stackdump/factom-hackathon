@@ -3,11 +3,11 @@ import json
 class Controller(object):
     """ control loading and saving network definitions """
 
-    def __init__(self, context=None, editor=None):
+    def __init__(self, context=None, editor=None, default_net='untitled'):
         self.editor = editor
         self.ctx = context
-        self.select_net = 'untitled'
-        self.view(select_net='octoe')
+        self.select_net = default_net
+        self.view(select_net=default_net)
         self.ctx.schemata(callback=self.load_saved_nets)
         self.bind_controls()
 

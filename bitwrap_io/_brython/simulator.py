@@ -63,7 +63,7 @@ class Simulation(object):
         return action
 
     def reset(self):
-        """ render SVG and hilight live transitions """
+        """ render SVG and disable hilight """
         self.pnet.reset_tokens()
         self.editor.reset(callback=self.editor.render)
 

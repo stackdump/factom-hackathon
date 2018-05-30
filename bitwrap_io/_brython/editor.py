@@ -179,7 +179,7 @@ class EditorEvents(EditorBase):
                'delta': diff
             }
         else:
-            txn_label = begin[1]
+            txn_label = end[0]
             offset = self.instance.place_defs[begin[0]]['offset']
             diff = -1
             arc_transaction = {

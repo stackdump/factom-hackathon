@@ -164,8 +164,6 @@ class PNet(RenderMixin):
         for label in self.transition_defs.keys():
             del self.transition_defs[label]['delta'][offset]
 
-        self.vector_size = len(self.place_defs)
-        self.delete_arcs_for_symbol(refid)
 
         for _, attr in self.place_defs.items():
             if attr['offset'] > offset:
@@ -174,6 +172,9 @@ class PNet(RenderMixin):
         del self.token_ledger[refid]
         del self.place_defs[refid]
         del self.places[refid]
+
+        self.delete_arcs_for_symbol(refid)
+        self.vector_size = len(self.place_defs)
 
     def delete_transition(self, refid):
         """ remove a transition symbol from net """
