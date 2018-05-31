@@ -76,6 +76,8 @@ class Draw(object):
 
                 _coords = _defs[refid]['position']
                 _defs[refid]['position'] = [int(_coords[0] + delta[0]), int(_coords[1] + delta[1])]
+            except:
+                pass
             finally:
                 editor.render()
 
@@ -114,7 +116,7 @@ class Draw(object):
         return Draw._node(x, y, label=label, symbol='transition')
 
     @staticmethod
-    def arc(sym1, sym2, token_weight=1):
+    def arc(sym1, sym2, token_weight=1, editor=None):
         """ draw arc between 2 points """
         x1 = float(_attr(sym1).x2.value)
         y1 = float(_attr(sym1).y2.value)
@@ -128,8 +130,8 @@ class Draw(object):
             end='transition'
             start='place'
 
-        _id = '%s-%s' % (sym1, sym2)
-        el = Draw._arc(x1, y1, x2, y2, refid=_id, start=start, end=end)
+        _id = '%s>%s' % (sym1, sym2)
+        el = Draw._arc(x1, y1, x2, y2, refid=_id, start=start, end=end, editor=editor)
         el.data('symbol', 'arc')
         el.data('start', sym1)
         el.data('end', sym2)
@@ -168,7 +170,7 @@ class Draw(object):
 
 
     @staticmethod
-    def _arc(x1, y1, x2, y2, weight=1, refid=None, start=None, end=None):
+    def _arc(x1, y1, x2, y2, weight=1, refid=None, start=None, end=None, editor=None):
         """
         draw arc with arrow
         This also adjusts x coordintates to match place/transition size
@@ -181,6 +183,7 @@ class Draw(object):
             else:
                 x1 = x1 + 20
                 x2 = x2 - 10
+
         elif end == 'place':
             if x1 > x2:
                 x1 = x1 - 5 
@@ -188,7 +191,7 @@ class Draw(object):
             else:
                 x1 = x1 + 5
                 x2 = x2 - 20
-        
+
         el = Draw.paper.line({
             'x1': x1,
             'y1': y1,
@@ -203,8 +206,34 @@ class Draw(object):
             'markerEnd': Draw.symbols['arrow']
         })
 
+        label_x = (x1 + x2) / 2 - 5
+        label_y = (y1 + y2) / 2
+
+        Draw._arc_handle(label_x, label_y, weight=weight, refid=refid, editor=editor)
+
         Draw.symbols[refid] = el
         return el
+
+    def _arc_handle(label_x, label_y, weight=1, refid=None, editor=None):
+        """ clickable handle to display and change arc weight """
+
+        def _drag_start(x, y, evt):
+            """ begin mouse interaction """
+            editor.on_click(evt)
+
+        # TODO add a selectable region in front of this txt
+        # should trigger a dialog to change weight
+        handle = Draw.paper.text(
+            label_x,
+            label_y - 5,
+            weight
+        ).attr({
+            'id': refid + '-arcweight',
+            'class': 'txtlabel',
+            'style': 'font-size: 12; font-weight: bold; cursor: crosshair'
+        })
+
+        handle.drag(None, _drag_start, None)
 
     @staticmethod
     def _arrow():
@@ -248,7 +277,8 @@ class Draw(object):
                 'fill': '#000',
                 'fill-opacity': 1,
                 'stroke': '#000',
-                'orient': 0 
+                'orient': 0,
+                'style': 'cursor: crosshair'
             })
 
         if value == 0:
@@ -261,8 +291,9 @@ class Draw(object):
             float(_attr(sym).y2.value),
             _txt
         ).attr({
-            'id': sym + '-txtlabel',
-            'class': 'txtlabel'
+            'id': _id,
+            'class': 'txtlabel',
+            'style': 'cursor: crosshair'
         })
 
     @staticmethod
@@ -271,7 +302,7 @@ class Draw(object):
         _txt = Draw.symbols[sym].data('label')
 
         el = Draw.paper.text(float(_attr(sym).x2.value) - 10, float(_attr(sym).y2.value) + 35, _txt)
-        el.attr({ 'class': 'label', 'style': 'font-size: 12px;'})
+        el.attr({ 'class': 'label', 'style': 'font-size: 12px; cursor: default'})
         return el
 
     @staticmethod
@@ -377,7 +408,7 @@ class RenderMixin(object):
 
         for label, txns in self.arc_defs.items():
             for txn in txns:
-                el = Draw.arc(txn['source'], txn['target'])
+                el = Draw.arc(txn['source'], txn['target'], editor=self.editor)
                 el.data('weight', txn['weight'])
                 el.data('offset', txn['offset'])
                 el.data('delta', txn['delta'])

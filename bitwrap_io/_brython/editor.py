@@ -128,15 +128,29 @@ class EditorEvents(EditorBase):
     def _token_changed(self, change, event):
         refid, symbol = self._selected(event)
 
-        if not symbol == 'place':
-            return
+        if symbol in ['tokens', 'place']:
+            current = self.instance.token_ledger[refid]
+            new_token_count = current + change
 
-        current = self.instance.token_ledger[refid]
-        new_token_count = current + change
+            if new_token_count >= 0:
+                self.instance.update_place_tokens(refid, new_token_count)
+                self.reset(callback=self.render)
 
-        if new_token_count >= 0:
-            self.instance.update_place_tokens(refid, new_token_count)
-            self.reset(callback=self.render)
+        elif symbol == 'arcweight':
+            begin, end = refid.split('>')
+
+            if begin in self.instance.arc_defs:
+                arctxn = begin
+            else:
+                arctxn = end
+
+            for txn in self.instance.arc_defs[arctxn]:
+                if txn['source'] != begin:
+                    continue
+                else:
+                    # FIXME apply add changes for arcweight
+                    self.ctx.log(txn)
+                    return
 
     def _selected(self, event):
         target_id = str(event.target.id)

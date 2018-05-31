@@ -1,15 +1,11 @@
 **last updated**
 
-Wed May 30 07:52:17 CDT 2018
+Thu May 31 01:11:07 CDT 2018
 ----------------------------
 
 WIP
 ---
-
-* update brython app enhance PetriNet  editor
-
-  * support clickable handles on arcs
-  * allow arc creation with > 1 token weight
+  finish changes to use inc/dec token action to change arc weights
 
 BACKLOG
 -------
@@ -19,6 +15,8 @@ BACKLOG
 
 * consider if we need to refactor github auth to make it optional
   * use case is: I want to host an API server to just use JWT bearer tokens
+
+* perhaps change cursor style for various objects when editor changes modes
 
 ICEBOX
 -------

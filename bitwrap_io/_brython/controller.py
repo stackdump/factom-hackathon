@@ -3,7 +3,7 @@ import json
 class Controller(object):
     """ control loading and saving network definitions """
 
-    def __init__(self, context=None, editor=None, default_net='untitled'):
+    def __init__(self, context=None, editor=None, default_net='octoe'):
         self.editor = editor
         self.ctx = context
         self.select_net = default_net
