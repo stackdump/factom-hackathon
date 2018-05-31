@@ -145,12 +145,24 @@ class EditorEvents(EditorBase):
                 arctxn = end
 
             for txn in self.instance.arc_defs[arctxn]:
-                if txn['source'] != begin:
-                    continue
+                if txn['source'] == begin:
+                    break
+
+            new_token_count = txn['weight'] + change
+
+            if new_token_count >= 0:
+                txn['weight'] = new_token_count
+                self.ctx.log(arctxn, txn)
+
+                if txn['delta'] > 0:
+                    txn['delta'] = new_token_count
                 else:
-                    # FIXME apply add changes for arcweight
-                    self.ctx.log(txn)
-                    return
+                    txn['delta'] = 0 - new_token_count
+
+                txn_def = self.instance.transition_defs[arctxn]
+                txn_def['delta'][txn['offset']] = txn['delta']
+
+                self.reset(callback=self.render)
 
     def _selected(self, event):
         target_id = str(event.target.id)

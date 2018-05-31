@@ -1,22 +1,24 @@
 **last updated**
 
-Thu May 31 01:11:07 CDT 2018
+Thu May 31 08:24:31 CDT 2018
 ----------------------------
 
 WIP
 ---
-  finish changes to use inc/dec token action to change arc weights
+
+* ACL on schema creation / all RPC commands
 
 BACKLOG
 -------
 
-* ACL on schema creation / all RPC commands
-* upload new schemata & convert to pnml from editor with 'save' button
-
 * consider if we need to refactor github auth to make it optional
   * use case is: I want to host an API server to just use JWT bearer tokens
 
-* perhaps change cursor style for various objects when editor changes modes
+* upload new schemata & convert to pnml from editor with 'save' button
+
+* re-examine use of 'roles' - leveraging inhibitor arcs
+
+  * enhance or remove feature
 
 ICEBOX
 -------
@@ -31,14 +33,12 @@ ICEBOX
   * allow end users to bind listeners to specific schema/oid combos
   * POC feature to save petri-net designs (no auth)
 
+* perhaps change cursor style for various objects when editor changes modes
+
 * remove all other string substitions 
 
     from ./storage/postgres.py
     in favor of using composable features of psycopg2:
     http://initd.org/psycopg/docs/sql.html#psycopg2.sql.SQL.join
     http://initd.org/psycopg/docs/sql.html#psycopg2.sql.Placeholder
-
-* re-examine use of 'roles' - leveraging inhibitor arcs
-
-  * enhance or remove feature
 

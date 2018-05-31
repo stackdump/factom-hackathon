@@ -131,7 +131,7 @@ class Draw(object):
             start='place'
 
         _id = '%s>%s' % (sym1, sym2)
-        el = Draw._arc(x1, y1, x2, y2, refid=_id, start=start, end=end, editor=editor)
+        el = Draw._arc(x1, y1, x2, y2, refid=_id, start=start, weight=token_weight, end=end, editor=editor)
         el.data('symbol', 'arc')
         el.data('start', sym1)
         el.data('end', sym2)
@@ -408,7 +408,7 @@ class RenderMixin(object):
 
         for label, txns in self.arc_defs.items():
             for txn in txns:
-                el = Draw.arc(txn['source'], txn['target'], editor=self.editor)
+                el = Draw.arc(txn['source'], txn['target'], token_weight=txn['weight'], editor=self.editor)
                 el.data('weight', txn['weight'])
                 el.data('offset', txn['offset'])
                 el.data('delta', txn['delta'])
