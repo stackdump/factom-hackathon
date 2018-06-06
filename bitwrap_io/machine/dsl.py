@@ -8,7 +8,11 @@ Uses Petri-Net Markup as a "Domain Specific Language" (DSL) to define a bitwrap 
 from bitwrap_io.machine.pnml import Transition, Place
 
 def append_roles(net):
-    """ build roles from edge list """
+    """
+    **currently unused**
+
+    build roles from edge list
+    """
 
     for edge in net.edges:
         if edge.inhibitor and ('_role' in edge.source):

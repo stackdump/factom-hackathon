@@ -3,7 +3,7 @@ import json
 class Controller(object):
     """ control loading and saving network definitions """
 
-    def __init__(self, context=None, editor=None, default_net='octoe'):
+    def __init__(self, context=None, editor=None, default_net='counter'):
         self.editor = editor
         self.ctx = context
         self.select_net = default_net
@@ -34,4 +34,4 @@ class Controller(object):
         if select_net:
             self.selected_net = select_net
 
-        self.editor.open(self.selected_net)
+        self.editor.open(self.selected_net, callback=self.editor.save)

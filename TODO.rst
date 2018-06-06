@@ -1,24 +1,20 @@
 **last updated**
 
-Thu May 31 08:24:31 CDT 2018
+Wed Jun  6 02:57:21 CDT 2018
 ----------------------------
 
 WIP
 ---
 
-* ACL on schema creation / all RPC commands
+* upload new schemata & convert to pnml from editor with 'save' button
 
 BACKLOG
 -------
 
+* ACL on schema creation / all RPC commands
+
 * consider if we need to refactor github auth to make it optional
   * use case is: I want to host an API server to just use JWT bearer tokens
-
-* upload new schemata & convert to pnml from editor with 'save' button
-
-* re-examine use of 'roles' - leveraging inhibitor arcs
-
-  * enhance or remove feature
 
 ICEBOX
 -------

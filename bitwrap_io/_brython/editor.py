@@ -1,6 +1,7 @@
 import json
 from ptnet import PNet
 from simulator import Simulation
+from exporter import Export
 
 class EditorBase(object):
 
@@ -16,14 +17,27 @@ class EditorBase(object):
         self.instance = None
         self.schema = None
 
-    def open(self, name):
+    def open(self, name, callback=None):
         self.schema = name
-        self.ctx.machine(self.schema, callback=self.load)
+
+        def after_load(res):
+            self.load(res)
+
+            if callable(callback):
+                callback()
+
+        self.ctx.machine(self.schema, callback=after_load)
 
     def load(self, res):
         """ store requested PNML and render as SVG """
         self.instance = PNet(json.loads(res.text), editor=self)
         self.reset(callback=self.render)
+
+    def save(self, savename=None):
+        """ export to xml and post to server """
+       
+        exp = Export(self.instance)
+        self.ctx.log('savename', exp.to_xml())
 
     def reset(self, callback=None):
         """ clear SVG and prepare markers """
