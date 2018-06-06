@@ -180,7 +180,7 @@ def bitwrap_api(app):
         dict(resource=State, urls=['/state/<schema>/<oid>'], endpoint='state'),
         dict(resource=Machine, urls=['/machine/<schema>'], endpoint='machine'),
         dict(resource=Event, urls=['/event/<schema>/<eventid>'], endpoint='event'),
-        dict(resource=Stream, urls=['/stream/<schema>/<streamid>'], endpoint='stream'),
+        dict(resource=Stream, urls=['/stream/<schema>/<stream_oid>'], endpoint='stream'),
         dict(resource=Schemata, urls=['/schemata'], endpoint='schemata'),
         dict(resource=Rpc, urls=['/api'], endpoint='api'),
         dict(resource=Config, urls=['/config/<stage>.json'], endpoint='config')
