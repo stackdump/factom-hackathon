@@ -11,6 +11,11 @@ class Controller(object):
         self.ctx.schemata(callback=self.load_saved_nets)
         self.bind_controls()
 
+    def bind_controls(self):
+        """ control editor instance """
+        self.ctx.jQuery('#netreload').on('click', lambda _: self.view())
+        self.ctx.jQuery('#netsave').on('click', lambda _: self.save())
+
     def load_saved_nets(self, req):
         """ load known schemata from server """
         nets = json.loads(req.text)['schemata']
@@ -26,12 +31,17 @@ class Controller(object):
         el.html(''.join(options))
         el.change(lambda event: self.view(event.target.value))
 
-    def bind_controls(self):
-        """ control editor instance """
-        self.ctx.jQuery('#netreload').on('click', lambda _: self.view())
+    def save(self):
+        """ upload petrinet xml """
+        def _log(req):
+            self.ctx.log(req.text)
+
+        xml = self.editor.export()
+        self.ctx.upload_pnml(self.selected_net, xml, callback=_log, errback=_log)
 
     def view(self, select_net=None):
+        """ open net with editor """
         if select_net:
             self.selected_net = select_net
 
-        self.editor.open(self.selected_net, callback=self.editor.save)
+        self.editor.open(self.selected_net)

@@ -46,6 +46,19 @@ class Context(object):
         """ clear python terminal """
         document['code'].value = txt
 
+    def upload_pnml(self, name, body, callback=None, errback=None):
+        """  upload_pnml(filename, body, callback=None, errback=None): upload xml petri-net definition"""
+        req = ajax.ajax()
+
+        if callback:
+            req.bind('complete', callback)
+        else:
+            req.bind('complete', self.echo)
+
+        req.open('POST', self.endpoint + '/petrinet/' + name, True)
+        req.set_header('content-type', 'application/xml')
+        req.send(body)
+
     def _rpc(self, method, params=[], callback=None, errback=None):
         """  _rpc(method, params=[], callback=None, errback=None): make JSONRPC POST to backend """
         self.seq = self.seq + 1

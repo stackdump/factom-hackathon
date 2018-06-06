@@ -4,6 +4,7 @@ Provide resources for bitwrap HTTP API
 """
 import os
 import json
+import xml.dom.minidom
 
 import socketio
 
@@ -66,6 +67,25 @@ class Rpc(Resource):
             res = {'id': req.get('id'), 'error': msg}
 
         return res, 200, None
+
+class PetriNet(Resource):
+    """ save new Petri-Net XML definition """
+
+    def post(self, schema):
+        machine_def = request.data
+
+        if type(machine_def) is bytes:
+            payload = machine_def.decode('utf8')
+        else:
+            payload = machine_def
+
+        xmldoc = xml.dom.minidom.parseString(payload)
+        savename = '%s/%s.xml' % (ptnet.PTNet.pnml_path, schema)
+
+        with open (savename, 'w') as f:
+            f.write(xmldoc.toprettyxml(indent='  '))
+
+        return {'saved': True, 'schema': schema}, 200, None
 
 
 class Dispatch(Resource):
@@ -155,6 +175,7 @@ def bitwrap_api(app):
     api = Api(app)
 
     routes = [
+        dict(resource=PetriNet, urls=['/petrinet/<schema>'], endpoint='petrinet'),
         dict(resource=Dispatch, urls=['/dispatch/<schema>/<oid>/<action>'], endpoint='dispatch'),
         dict(resource=State, urls=['/state/<schema>/<oid>'], endpoint='state'),
         dict(resource=Machine, urls=['/machine/<schema>'], endpoint='machine'),

@@ -1,13 +1,12 @@
 """ Export Petri-Net as xml/PNML """
 
-from browser import console, window
+from browser import window
 
 class Export(object):
 
     header = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
 
     def __init__(self, instance):
-        console.log('new export')
         self.instance = instance
 
     def _append_places(self, doc, net):
@@ -166,6 +165,5 @@ class Export(object):
         self._append_transitions(doc, net)
         self._append_arcs(doc, net)
 
-        console.log(pnml)
         return self.header + pnml.outerHTML
 

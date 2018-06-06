@@ -33,11 +33,9 @@ class EditorBase(object):
         self.instance = PNet(json.loads(res.text), editor=self)
         self.reset(callback=self.render)
 
-    def save(self, savename=None):
+    def export(self):
         """ export to xml and post to server """
-       
-        exp = Export(self.instance)
-        self.ctx.log('savename', exp.to_xml())
+        return Export(self.instance).to_xml()
 
     def reset(self, callback=None):
         """ clear SVG and prepare markers """
