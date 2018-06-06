@@ -1,4 +1,5 @@
 import json
+from browser import window
 
 class Controller(object):
     """ control loading and saving network definitions """
@@ -13,8 +14,8 @@ class Controller(object):
 
     def bind_controls(self):
         """ control editor instance """
-        self.ctx.jQuery('#netreload').on('click', lambda _: self.view())
-        self.ctx.jQuery('#netsave').on('click', lambda _: self.save())
+        window.jQuery('#netreload').on('click', lambda _: self.view())
+        window.jQuery('#netsave').on('click', lambda _: self.save())
 
     def load_saved_nets(self, req):
         """ load known schemata from server """
@@ -27,7 +28,7 @@ class Controller(object):
             else:
                 options.append('<option>%s</option>' % net)
 
-        el = self.ctx.jQuery('#netselect')
+        el = window.jQuery('#netselect')
         el.html(''.join(options))
         el.change(lambda event: self.view(event.target.value))
 

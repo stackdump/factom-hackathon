@@ -13,7 +13,6 @@ class Context(object):
         self.endpoint = ''
         self.broker = Broker
         self.log = console.log
-        self.jQuery = window.jQuery
         self._get(window.Bitwrap.config, self.configure)
         self.doc = document
 

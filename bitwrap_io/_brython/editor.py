@@ -1,4 +1,5 @@
 import json
+from browser import window
 from ptnet import PNet
 from simulator import Simulation
 from exporter import Export
@@ -70,7 +71,7 @@ class EditorBase(object):
             'token_ledger': self.instance.token_ledger
         })
 
-        self.ctx.jQuery('#json').JSONView(_info, {'collapsed': True})
+        window.jQuery('#json').JSONView(_info, {'collapsed': True})
 
 class EditorEvents(EditorBase):
     """ Editor event callbacks """
@@ -253,11 +254,11 @@ class Editor(EditorEvents):
         self.bind_controls()
 
     def bind_controls(self):
-        self.ctx.jQuery('#net').on('click', self.on_insert)
-        self.ctx.jQuery('.select').on('click', self.select)
-        self.ctx.jQuery('.symbol').on('click', self.symbol)
-        self.ctx.jQuery('.tool').on('click', self.tool)
-        self.ctx.jQuery('.simulator').on('click', self.simulator)
+        window.jQuery('#net').on('click', self.on_insert)
+        window.jQuery('.select').on('click', self.select)
+        window.jQuery('.symbol').on('click', self.symbol)
+        window.jQuery('.tool').on('click', self.tool)
+        window.jQuery('.simulator').on('click', self.simulator)
 
     def select(self, event):
         """ enter select/move mode """
