@@ -36,8 +36,11 @@ class Controller(object):
         def _log(req):
             self.ctx.log(req.text)
 
-        xml = self.editor.export()
-        self.ctx.upload_pnml(self.selected_net, xml, callback=_log, errback=_log)
+        def _upload():
+            xml = self.editor.export()
+            self.ctx.upload_pnml(self.selected_net, xml, callback=_log, errback=_log)
+
+        self.editor.save(callback=_upload)
 
     def view(self, select_net=None):
         """ open net with editor """

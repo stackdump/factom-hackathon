@@ -33,6 +33,14 @@ class EditorBase(object):
         self.instance = PNet(json.loads(res.text), editor=self)
         self.reset(callback=self.render)
 
+    def save(self, callback=None):
+        """ commit token ledger as new inital values """
+        for key, val in self.instance.token_ledger.items():
+            self.instance.place_defs[key]['initial'] = val
+
+        if callable(callback):
+            callback()
+
     def export(self):
         """ export to xml and post to server """
         return Export(self.instance).to_xml()

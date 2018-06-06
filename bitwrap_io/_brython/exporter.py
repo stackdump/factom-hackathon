@@ -1,6 +1,6 @@
 """ Export Petri-Net as xml/PNML """
 
-from browser import window
+from browser import window 
 
 class Export(object):
 
@@ -48,7 +48,7 @@ class Export(object):
             graphics.appendChild(pos)
             initial.appendChild(graphics)
             val = doc.createElement('value')
-            val.appendChild(doc.createTextNode('Default,0'))
+            val.appendChild(doc.createTextNode('Default,%i' % attr['initial']))
             initial.appendChild(val)
             place.appendChild(initial)
 
