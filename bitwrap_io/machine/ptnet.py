@@ -37,7 +37,6 @@ class PTNet(object):
         def reindex():
             """ rebuild net """
 
-            #dsl.append_roles(self.net) # inhibitor arcs not supported for now
             self.places = dsl.places(self.net)
             self.transitions = dsl.transitions(self.net, self.places)
             dsl.apply_edges(self.net, self.places, self.transitions)

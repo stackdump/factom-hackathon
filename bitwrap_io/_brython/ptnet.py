@@ -128,7 +128,6 @@ class PNet(RenderMixin):
 
         self.transition_defs[label] = {
             'position': coords,
-            'role': 'default',
             'delta': [0] * self.vector_size
         }
 

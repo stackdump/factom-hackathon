@@ -32,7 +32,6 @@ class PetriNet(object):
         self.edges = [] # List or arcs
         self.transitions = {} # Map of transitions. Key: transition id, Value: event
         self.places = {} # Map of places. Key: place id, Value: place
-        self.roles = [] # use roles to model inhibitor arc actors
         self.name = None
 
     def __str__(self):
@@ -136,7 +135,6 @@ class Edge(object):
         self.net = None # Reference to net object for label resolution of source an target
 
         self.inhibitor = False
-        self.role = None
 
 
     def find_source(self):
@@ -265,9 +263,6 @@ def parse_pnml_file(filename):
             arc_type = arc_node.find('type').get('value')
 
             if arc_type == 'inhibitor':
-                # TODO use edge.source to determine if this arc expresses a role or
-                # if the source yields a token
-                # record 'roles' accordingly
                 edge.inhibitor = True
 
             edge.net = net

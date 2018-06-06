@@ -7,22 +7,6 @@ Uses Petri-Net Markup as a "Domain Specific Language" (DSL) to define a bitwrap 
 
 from bitwrap_io.machine.pnml import Transition, Place
 
-def append_roles(net):
-    """
-    **currently unused**
-
-    build roles from edge list
-    """
-
-    for edge in net.edges:
-        if edge.inhibitor and ('_role' in edge.source):
-            role_name = edge.source.replace('_role', '')
-
-            if role_name not in net.roles:
-                net.roles.append(role_name)
-
-            edge.role = role_name # set required role
-
 def places(net):
     """ build place vector definition """
 
@@ -31,15 +15,13 @@ def places(net):
 
     for place in net.places:
 
-        # KLUDGE: refactor 'role' conventions to be more explicit
-        if not '_role' in place:
-            _places[place] = {
-                'offset': offset,
-                'position': net.places[place].position,
-                'initial': net.places[place].marking
-            }
+        _places[place] = {
+            'offset': offset,
+            'position': net.places[place].position,
+            'initial': net.places[place].marking
+        }
 
-            offset += 1
+        offset += 1
 
     return _places
 
@@ -55,8 +37,7 @@ def transitions(net, net_places):
     for action in net.transitions:
         _transitions[action] = {
             'delta': empty_vector(len(net_places)),
-            'position': net.transitions[action].position,
-            'role': 'default'
+            'position': net.transitions[action].position
         }
 
     return _transitions
@@ -76,9 +57,7 @@ def apply_edges(net, net_places, net_transitions):
                 net_transitions[source.id]['delta'][offset] = 1
 
         elif isinstance(source, Place):
-            if edge.inhibitor is True:
-                net_transitions[target.id]['role'] = edge.role
-            else:
+            if not edge.inhibitor:
                 offset = net_places[source.id]['offset']
                 net_transitions[target.id]['delta'][offset] = -1
         else:
