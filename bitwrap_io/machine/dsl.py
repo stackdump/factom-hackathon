@@ -49,16 +49,15 @@ def apply_edges(net, net_places, net_transitions):
         source = edge.find_source()
         target = edge.find_target()
 
+        if edge.inhibitor is True:
+            raise Exception('inhibitor arc not supported')
+
         if isinstance(source, Transition):
-            if edge.inhibitor is True:
-                raise Exception('Roles cannot be targets')
-            else:
-                offset = net_places[target.id]['offset']
-                net_transitions[source.id]['delta'][offset] = 1
+            offset = net_places[target.id]['offset']
+            net_transitions[source.id]['delta'][offset] = edge.inscription
 
         elif isinstance(source, Place):
-            if not edge.inhibitor:
-                offset = net_places[source.id]['offset']
-                net_transitions[target.id]['delta'][offset] = -1
+            offset = net_places[source.id]['offset']
+            net_transitions[target.id]['delta'][offset] = (0 - edge.inscription)
         else:
             raise Exception('invalid edge %s' % edge.id)

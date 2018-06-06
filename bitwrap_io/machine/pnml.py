@@ -259,7 +259,8 @@ def parse_pnml_file(filename):
             edge.id = arc_node.get('id')
             edge.source = arc_node.get('source')
             edge.target = arc_node.get('target')
-            #edge.inscription = float(arc_node.find('./inscription/text').text)
+            inscription_str = arc_node.find('./inscription/value').text
+            edge.inscription = int(inscription_str.replace('Default,', ''))
             arc_type = arc_node.find('type').get('value')
 
             if arc_type == 'inhibitor':
