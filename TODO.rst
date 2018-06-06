@@ -1,20 +1,23 @@
 **last updated**
 
-Wed Jun  6 03:49:17 CDT 2018
+Wed Jun  6 04:11:19 CDT 2018
 ----------------------------
 
 WIP
 ---
 
-* ACL on schema creation / all RPC commands
+* require authentication
 
 BACKLOG
 -------
 
+* ACL on schema creation / all RPC commands
+
 * consider if we need to refactor github auth to make it optional
+
   * use case is: I want to host an API server to just use JWT bearer tokens
 
-* add a way to change schemata names when uploading as xml
+* add a way to change schemata names when uploading pnml
 
 ICEBOX
 -------
