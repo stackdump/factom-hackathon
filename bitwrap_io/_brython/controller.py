@@ -16,6 +16,7 @@ class Controller(object):
         """ control editor instance """
         window.jQuery('#netreload').on('click', lambda _: self.view())
         window.jQuery('#netsave').on('click', lambda _: self.save())
+        window.jQuery('#dbreload').on('click', lambda _: self.install_db())
 
     def load_saved_nets(self, req):
         """ load known schemata from server """
@@ -32,7 +33,7 @@ class Controller(object):
         el.html(''.join(options))
         el.change(lambda event: self.view(event.target.value))
 
-    def save(self):
+    def save(self, callback=None):
         """ upload petrinet xml """
         def _log(req):
             self.ctx.log(req.text)
@@ -40,6 +41,9 @@ class Controller(object):
         def _upload():
             xml = self.editor.export()
             self.ctx.upload_pnml(self.selected_net, xml, callback=_log, errback=_log)
+
+            if callable(callback):
+                callback()
 
         self.editor.save(callback=_upload)
 
@@ -49,3 +53,13 @@ class Controller(object):
             self.selected_net = select_net
 
         self.editor.open(self.selected_net)
+
+    def install_db(self):
+        """ save net then destroy and reload db schema """
+        def _create(req):
+            self.ctx.load(self.selected_net, self.selected_net)
+
+        def _destroy():
+            self.ctx.destroy(self.selected_net, callback=_create)
+
+        self.save(callback=_destroy)

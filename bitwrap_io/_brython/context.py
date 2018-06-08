@@ -140,6 +140,6 @@ class Context(object):
         """ create(schema, oid): create a new stream """
         self._rpc('stream_create', params=[schema, oid])
 
-    def destroy(self, schema):
-        """ destroy(schema): drop from db / destroys a schema and all events """
-        self._rpc('schema_destroy', params=[schema])
+    def destroy(self, schema, callback=None):
+        """ destroy(schema, callback=None): drop from db / destroys a schema and all events """
+        self._rpc('schema_destroy', params=[schema], callback=callback)
