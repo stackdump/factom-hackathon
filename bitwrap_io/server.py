@@ -38,7 +38,7 @@ def pnml_editor(app):
 
     app.static_url_path = ''
     app.template_folder = os.path.abspath(os.path.dirname(__file__) + '/../templates')
-    bitwrap_api(app)
+    api = bitwrap_api(app)
     brython_folder = os.path.abspath(os.path.dirname(__file__) + '/_brython')
 
     @app.route('/<path:path>')
@@ -53,6 +53,8 @@ def pnml_editor(app):
     @app.route('/editor')
     def editor():
         return render_template('editor.html')
+
+    return api
 
 if __name__ == '__main__':
     import eventlet

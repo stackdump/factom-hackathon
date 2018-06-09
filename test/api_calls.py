@@ -3,7 +3,7 @@ from petfax import factom
 # Default settings
 #print(factom.info())
 #print(factom.chains())
-#print(factom.create_chain(external_ids=['foo', 'bar'], content='hello: world'))
+print(factom.create_chain(external_ids=['foo', 'bar'], content='hello: world'))
 
 CHAIN = {u'entry_hash': u'f1e2899734c734c26d8b463c01dadd460947f5e2679048b27005c8a1fc27e210',
         u'chain_id': u'92475004e70f41b94750f4a77bf7b430551113b25d3d57169eadca5692bb043d'}
