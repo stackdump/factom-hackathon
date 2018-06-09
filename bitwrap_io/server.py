@@ -48,10 +48,6 @@ def pnml_editor(app):
 
     @app.route('/')
     def index():
-        return redirect(url_for('editor'))
-
-    @app.route('/editor')
-    def editor():
         return render_template('editor.html')
 
     return api

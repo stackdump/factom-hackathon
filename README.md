@@ -1,20 +1,5 @@
-# Bitwrap-io
+# Pet Registry Index
 
-A state-machine eventstore 'blockchain style'.
+Submission for Factom Blockchain hackathon
 
-Using Markov chains stored in a Postgres database.
-
-Read the whitepaper [Solving 'State Exposion' with Petri-Nets and Vector Clocks](https://github.com/bitwrap/bitwrap-io/blob/master/whitepaper.md)
-
-### Status
-
-bitwrap eventstore API using [Flask](http://flask.pocoo.org/) and [SocketIO](https://socket.io/)
-
-[Brython](https://www.brython.info/static_doc/en/intro.html) Web UI is mostly complete.
-
-
-### Features
-
-* Visual State machine designer *does not yet save back to server*
-* Eventstore using a relational DB
-* Websocket support for observing event streams
+https://www.factom.com/blog/factom-blockchain-vs-paper-hackathon-june-9-10-in-austin
