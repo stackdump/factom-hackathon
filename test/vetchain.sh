@@ -37,9 +37,9 @@ curl "${API}/api" \
   -H 'content-type: application/json'  \
   --data-binary '{"id":4,"method":"schema_create","params":["vetchain","vetchain"]}'
 
-#------------------------------
-# create the factom blockchain
-#------------------------------
+#---------------------------
+# create factom blockchains
+#---------------------------
 
 curl "${API}/api" \
   -H 'content-type: application/json'  \

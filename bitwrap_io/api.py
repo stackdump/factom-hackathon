@@ -23,19 +23,30 @@ sio = socketio.Server(async_mode='eventlet', cookie='bitwrap')
 
 VERSION = 'v0.3.0'
 
-def commit(schema, oid, action, payload):
-    """ append event to eventstore """
-
+def _commit(schema, oid, action, payload):
     res = eventstore(schema)(oid=oid, action=action, payload=payload)
     res['action'] = action
     res['payload'] = payload
- 
-    # TODO: commit to factom blockchain for each vet*pet
-    # figure out what should be an external id vs content
 
-    print('[%s]\n   %s => %s \n\n' % ('vetchain', oid, json.dumps(res)))
+    return res
 
-    print('[%s]\n   %s => %s\n\n' % ('petchain', oid, json.dumps(res)))
+def commit(schema, oid, action, payload):
+    """ append event to eventstore """
+
+    res = _commit(schema, oid, action, payload)
+    print('[%s]\n   %s => %s\n\n' % (schema, oid, json.dumps(res)))
+
+    if schema == 'vetchain':
+        # then write to petchain also
+        pet_payload = json.loads(payload)
+
+        pet_payload['vetchain'] = oid
+        pet_oid = pet_payload.pop('petchain')
+
+        pet_res = _commit('petchain', pet_oid, action, json.dumps(pet_payload))
+        print('[%s]\n   %s => %s\n\n' % ('petchain', pet_oid, json.dumps(pet_res)))
+
+        # TODO add petres to 'res' return payload
 
     sio.emit('commit', res)
     return res
