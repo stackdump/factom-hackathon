@@ -43,8 +43,23 @@ def rpc_stream_exists(schema, oid):
 
     return res
 
+def _machine_def(schema):
+    machine = pnml.Machine(schema)
+    res = {
+        'machine': {
+            'name': schema,
+            'places': machine.net.places,
+            'transitions': machine.net.transitions
+        }
+    }
+
+    return json.dumps(res)
+
 def rpc_stream_create(schema, oid):
-    """ create a new stream and a corresponding blockchain on factom """ 
+    """
+    create a new stream and a corresponding blockchain on factom
+    each blockchain contains full state machine def
+    """ 
 
     res = eventstore(schema).storage.db.create_stream(oid)
 
@@ -53,11 +68,16 @@ def rpc_stream_create(schema, oid):
         return res
 
 
-    # TODO: create blockchain and capture data as payload
     print('create blockchain for %s:%s' % (schema, oid))
+    # FIXME - this is borked
+    return res
+    fact_res = factom.create_chain(external_ids=[schema, str(oid)], content=_machine_def)
 
-    payload = '{}'
+    _payload = json.dumps(fact_res)
 
-    res = eventstore(schema)(oid=oid, action='create_chain', payload=payload)
-    # TODO: trigger 'create_chain' action & store chain_id to payload
+    res = eventstore(schema)(oid=oid, action='create_chain', payload=json.dumps(fact_res))
+
+    res['action'] = 'create_chain'
+    res['payload'] = _payload
+
     return res

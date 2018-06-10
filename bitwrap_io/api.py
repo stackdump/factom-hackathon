@@ -28,6 +28,11 @@ def _commit(schema, oid, action, payload):
     res['action'] = action
     res['payload'] = payload
 
+    if schema in ['petchain', 'vetchain']:
+        # NOTE: must retrieve create_stream event to get reference id
+        print("FIXME: create entry in blockchain")
+        # TODO add entry to blockchain & append data to response
+
     return res
 
 def commit(schema, oid, action, payload):
@@ -38,13 +43,18 @@ def commit(schema, oid, action, payload):
 
     if schema == 'vetchain':
         # then write to petchain also
-        pet_payload = json.loads(payload)
+        try:
+            pet_payload = json.loads(payload)
 
-        pet_payload['vetchain'] = oid
-        pet_oid = pet_payload.pop('petchain')
+            pet_payload['vetchain'] = oid
+            pet_oid = pet_payload.pop('petchain')
 
-        pet_res = _commit('petchain', pet_oid, action, json.dumps(pet_payload))
-        print('[%s]\n   %s => %s\n\n' % ('petchain', pet_oid, json.dumps(pet_res)))
+            pet_res = _commit('petchain', pet_oid, action, json.dumps(pet_payload))
+            print('[%s]\n   %s => %s\n\n' % ('petchain', pet_oid, json.dumps(pet_res)))
+
+        except:
+            # KLUDGE allow event from simulator (where payload won't be set)
+            pass
 
         # TODO add petres to 'res' return payload
 
