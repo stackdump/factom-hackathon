@@ -1,424 +1,478 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" ?>
 <pnml>
-    <net>
-        <token id="Default" red="0" green="0" blue="0"/>
-        <place id="exam">
-            <graphics>
-                <position x="191.0" y="156.0"/>
-            </graphics>
-            <name>
-                <value>exam</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="wait_30_day">
-            <graphics>
-                <position x="347.0" y="332.0"/>
-            </graphics>
-            <name>
-                <value>wait_30_day</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="wait_120_day">
-            <graphics>
-                <position x="869.0" y="161.0"/>
-            </graphics>
-            <name>
-                <value>wait_120_day</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="rfid_updates">
-            <graphics>
-                <position x="164.0" y="50.0"/>
-            </graphics>
-            <name>
-                <value>rfid_updates</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="ready_to_travel">
-            <graphics>
-                <position x="1061.0" y="325.0"/>
-            </graphics>
-            <name>
-                <value>ready_to_travel</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="wait_21_day">
-            <graphics>
-                <position x="516.0" y="165.0"/>
-            </graphics>
-            <name>
-                <value>wait_21_day</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <place id="titer_lab_result">
-            <graphics>
-                <position x="694.0" y="331.0"/>
-            </graphics>
-            <name>
-                <value>titer_lab_result</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <capacity>
-                <value>0</value>
-            </capacity>
-            <initialMarking>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-                <value>Default,0</value>
-            </initialMarking>
-        </place>
-        <transition id="vaccine">
-            <graphics>
-                <position x="245.0" y="335.0"/>
-            </graphics>
-            <name>
-                <value>vaccine</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="update_rfid">
-            <graphics>
-                <position x="55.0" y="51.0"/>
-            </graphics>
-            <name>
-                <value>update_rfid</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="submit_lab_work">
-            <graphics>
-                <position x="734.0" y="163.0"/>
-            </graphics>
-            <name>
-                <value>submit_lab_work</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="titer_test">
-            <graphics>
-                <position x="565.0" y="331.0"/>
-            </graphics>
-            <name>
-                <value>titer_test</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="new_travel_process">
-            <graphics>
-                <position x="53.0" y="161.0"/>
-            </graphics>
-            <name>
-                <value>new_travel_process</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="verified_complete">
-            <graphics>
-                <position x="918.0" y="328.0"/>
-            </graphics>
-            <name>
-                <value>verified_complete</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <transition id="booster">
-            <graphics>
-                <position x="393.0" y="166.0"/>
-            </graphics>
-            <name>
-                <value>booster</value>
-                <graphics>
-                    <offset x="0.0" y="0.0"/>
-                </graphics>
-            </name>
-            <infiniteServer>
-                <value>false</value>
-            </infiniteServer>
-            <timed>
-                <value>false</value>
-            </timed>
-            <priority>
-                <value>1</value>
-            </priority>
-            <orientation>
-                <value>0</value>
-            </orientation>
-            <rate>
-                <value>1.0</value>
-            </rate>
-        </transition>
-        <arc id="verified_complete to ready_to_travel" source="verified_complete" target="ready_to_travel">
-            <arcpath id="" x="928.0" y="343.0" curvePoint="false"/>
-            <arcpath id="" x="1061.0" y="340.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="new_travel_process to exam" source="new_travel_process" target="exam">
-            <arcpath id="" x="63.0" y="176.0" curvePoint="false"/>
-            <arcpath id="" x="191.0" y="172.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="vaccine to wait_30_day" source="vaccine" target="wait_30_day">
-            <arcpath id="" x="255.0" y="350.0" curvePoint="false"/>
-            <arcpath id="" x="347.0" y="347.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="titer_test to titer_lab_result" source="titer_test" target="titer_lab_result">
-            <arcpath id="" x="575.0" y="346.0" curvePoint="false"/>
-            <arcpath id="" x="694.0" y="346.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="submit_lab_work to wait_120_day" source="submit_lab_work" target="wait_120_day">
-            <arcpath id="" x="744.0" y="178.0" curvePoint="false"/>
-            <arcpath id="" x="869.0" y="176.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="booster to wait_21_day" source="booster" target="wait_21_day">
-            <arcpath id="" x="403.0" y="181.0" curvePoint="false"/>
-            <arcpath id="" x="516.0" y="180.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="update_rfid to rfid_updates" source="update_rfid" target="rfid_updates">
-            <arcpath id="" x="65.0" y="66.0" curvePoint="false"/>
-            <arcpath id="" x="164.0" y="65.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="wait_120_day to verified_complete" source="wait_120_day" target="verified_complete">
-            <arcpath id="" x="888.0" y="191.0" curvePoint="false"/>
-            <arcpath id="" x="923.0" y="328.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="wait_21_day to titer_test" source="wait_21_day" target="titer_test">
-            <arcpath id="" x="535.0" y="195.0" curvePoint="false"/>
-            <arcpath id="" x="570.0" y="331.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="wait_30_day to booster" source="wait_30_day" target="booster">
-            <arcpath id="" x="365.0" y="332.0" curvePoint="false"/>
-            <arcpath id="" x="398.0" y="196.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="exam to vaccine" source="exam" target="vaccine">
-            <arcpath id="" x="210.0" y="185.0" curvePoint="false"/>
-            <arcpath id="" x="250.0" y="335.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-        <arc id="titer_lab_result to submit_lab_work" source="titer_lab_result" target="submit_lab_work">
-            <arcpath id="" x="712.0" y="331.0" curvePoint="false"/>
-            <arcpath id="" x="739.0" y="193.0" curvePoint="false"/>
-            <type value="normal"/>
-            <inscription>
-                <value>Default,1</value>
-            </inscription>
-        </arc>
-    </net>
+  <net>
+    <token blue="0" green="0" id="Default" red="0"/>
+    <place id="exam">
+      <graphics>
+        <position x="191" y="156"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>exam</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="wait_30_day">
+      <graphics>
+        <position x="347" y="332"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>wait_30_day</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="wait_120_day">
+      <graphics>
+        <position x="869" y="161"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>wait_120_day</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="rfid_updates">
+      <graphics>
+        <position x="488" y="46"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>rfid_updates</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="ready_to_travel">
+      <graphics>
+        <position x="1061" y="325"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>ready_to_travel</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="wait_21_day">
+      <graphics>
+        <position x="516" y="165"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>wait_21_day</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="chain_created">
+      <graphics>
+        <position x="200" y="41"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>chain_created</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <place id="titer_lab_result">
+      <graphics>
+        <position x="694" y="331"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>titer_lab_result</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
+    <transition id="vaccine">
+      <graphics>
+        <position x="245" y="335"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>vaccine</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="update_rfid">
+      <graphics>
+        <position x="379" y="47"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>update_rfid</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="submit_lab_work">
+      <graphics>
+        <position x="734" y="163"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>submit_lab_work</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="titer_test">
+      <graphics>
+        <position x="565" y="331"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>titer_test</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="new_travel_process">
+      <graphics>
+        <position x="53" y="161"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>new_travel_process</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="verified_complete">
+      <graphics>
+        <position x="918" y="328"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>verified_complete</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="booster">
+      <graphics>
+        <position x="393" y="166"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>booster</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <transition id="create_chain">
+      <graphics>
+        <position x="86" y="43"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>create_chain</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
+    <arc id="exam to vaccine" source="exam" target="vaccine">
+      <arcpath curvepoint="false" id="source" x="191" y="156"/>
+      <arcpath curvepoint="false" id="target" x="245" y="335"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="vaccine to wait_30_day" source="vaccine" target="wait_30_day">
+      <arcpath curvepoint="false" id="source" x="245" y="335"/>
+      <arcpath curvepoint="false" id="target" x="347" y="332"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="update_rfid to rfid_updates" source="update_rfid" target="rfid_updates">
+      <arcpath curvepoint="false" id="source" x="379" y="47"/>
+      <arcpath curvepoint="false" id="target" x="488" y="46"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="submit_lab_work to wait_120_day" source="submit_lab_work" target="wait_120_day">
+      <arcpath curvepoint="false" id="source" x="734" y="163"/>
+      <arcpath curvepoint="false" id="target" x="869" y="161"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="titer_lab_result to submit_lab_work" source="titer_lab_result" target="submit_lab_work">
+      <arcpath curvepoint="false" id="source" x="694" y="331"/>
+      <arcpath curvepoint="false" id="target" x="734" y="163"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="wait_21_day to titer_test" source="wait_21_day" target="titer_test">
+      <arcpath curvepoint="false" id="source" x="516" y="165"/>
+      <arcpath curvepoint="false" id="target" x="565" y="331"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="titer_test to titer_lab_result" source="titer_test" target="titer_lab_result">
+      <arcpath curvepoint="false" id="source" x="565" y="331"/>
+      <arcpath curvepoint="false" id="target" x="694" y="331"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="new_travel_process to exam" source="new_travel_process" target="exam">
+      <arcpath curvepoint="false" id="source" x="53" y="161"/>
+      <arcpath curvepoint="false" id="target" x="191" y="156"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="wait_120_day to verified_complete" source="wait_120_day" target="verified_complete">
+      <arcpath curvepoint="false" id="source" x="869" y="161"/>
+      <arcpath curvepoint="false" id="target" x="918" y="328"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="verified_complete to ready_to_travel" source="verified_complete" target="ready_to_travel">
+      <arcpath curvepoint="false" id="source" x="918" y="328"/>
+      <arcpath curvepoint="false" id="target" x="1061" y="325"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="wait_30_day to booster" source="wait_30_day" target="booster">
+      <arcpath curvepoint="false" id="source" x="347" y="332"/>
+      <arcpath curvepoint="false" id="target" x="393" y="166"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="booster to wait_21_day" source="booster" target="wait_21_day">
+      <arcpath curvepoint="false" id="source" x="393" y="166"/>
+      <arcpath curvepoint="false" id="target" x="516" y="165"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="create_chain to chain_created" source="create_chain" target="chain_created">
+      <arcpath curvepoint="false" id="source" x="86" y="43"/>
+      <arcpath curvepoint="false" id="target" x="200" y="41"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+  </net>
 </pnml>

@@ -4,7 +4,7 @@
     <token blue="0" green="0" id="Default" red="0"/>
     <place id="vax_count">
       <graphics>
-        <position x="397" y="225"/>
+        <position x="310" y="234"/>
       </graphics>
       <name>
         <graphics>
@@ -24,7 +24,7 @@
     </place>
     <place id="trave_certs_lifetime">
       <graphics>
-        <position x="693" y="131"/>
+        <position x="680" y="145"/>
       </graphics>
       <name>
         <graphics>
@@ -44,7 +44,7 @@
     </place>
     <place id="rfid_updates_lifetime">
       <graphics>
-        <position x="375" y="40"/>
+        <position x="664" y="44"/>
       </graphics>
       <name>
         <graphics>
@@ -64,7 +64,7 @@
     </place>
     <place id="trave_process_inflight">
       <graphics>
-        <position x="329" y="136"/>
+        <position x="316" y="150"/>
       </graphics>
       <name>
         <graphics>
@@ -84,7 +84,7 @@
     </place>
     <place id="booster_count">
       <graphics>
-        <position x="401" y="313"/>
+        <position x="314" y="322"/>
       </graphics>
       <name>
         <graphics>
@@ -102,9 +102,29 @@
         <value>Default,0</value>
       </initialMarking>
     </place>
+    <place id="chain_created">
+      <graphics>
+        <position x="338" y="41"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>chain_created</value>
+      </name>
+      <capacity>
+        <value>0</value>
+      </capacity>
+      <initialMarking>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>Default,0</value>
+      </initialMarking>
+    </place>
     <place id="lab_submission_count">
       <graphics>
-        <position x="404" y="484"/>
+        <position x="687" y="311"/>
       </graphics>
       <name>
         <graphics>
@@ -124,7 +144,7 @@
     </place>
     <place id="titer_count">
       <graphics>
-        <position x="401" y="401"/>
+        <position x="684" y="228"/>
       </graphics>
       <name>
         <graphics>
@@ -144,7 +164,7 @@
     </place>
     <transition id="vaccine">
       <graphics>
-        <position x="229" y="226"/>
+        <position x="142" y="235"/>
       </graphics>
       <name>
         <graphics>
@@ -170,7 +190,7 @@
     </transition>
     <transition id="update_rfid">
       <graphics>
-        <position x="211" y="41"/>
+        <position x="500" y="45"/>
       </graphics>
       <name>
         <graphics>
@@ -196,7 +216,7 @@
     </transition>
     <transition id="submit_lab_work">
       <graphics>
-        <position x="243" y="488"/>
+        <position x="526" y="315"/>
       </graphics>
       <name>
         <graphics>
@@ -222,7 +242,7 @@
     </transition>
     <transition id="titer_test">
       <graphics>
-        <position x="238" y="403"/>
+        <position x="521" y="230"/>
       </graphics>
       <name>
         <graphics>
@@ -248,7 +268,7 @@
     </transition>
     <transition id="new_travel_process">
       <graphics>
-        <position x="149" y="137"/>
+        <position x="136" y="151"/>
       </graphics>
       <name>
         <graphics>
@@ -274,7 +294,7 @@
     </transition>
     <transition id="verified_complete">
       <graphics>
-        <position x="525" y="134"/>
+        <position x="512" y="148"/>
       </graphics>
       <name>
         <graphics>
@@ -300,7 +320,7 @@
     </transition>
     <transition id="booster">
       <graphics>
-        <position x="232" y="316"/>
+        <position x="145" y="325"/>
       </graphics>
       <name>
         <graphics>
@@ -324,65 +344,99 @@
         <value>1.0</value>
       </rate>
     </transition>
+    <transition id="create_chain">
+      <graphics>
+        <position x="140" y="42"/>
+      </graphics>
+      <name>
+        <graphics>
+          <offset x="0.0" y="0.0"/>
+        </graphics>
+        <value>create_chain</value>
+      </name>
+      <infiniteServer>
+        <value>false</value>
+      </infiniteServer>
+      <timed>
+        <value>false</value>
+      </timed>
+      <priority>
+        <value>1</value>
+      </priority>
+      <orientation>
+        <value>0</value>
+      </orientation>
+      <rate>
+        <value>1.0</value>
+      </rate>
+    </transition>
     <arc id="vaccine to vax_count" source="vaccine" target="vax_count">
-      <arcpath curvepoint="false" id="source" x="229" y="226"/>
-      <arcpath curvepoint="false" id="target" x="397" y="225"/>
+      <arcpath curvepoint="false" id="source" x="142" y="235"/>
+      <arcpath curvepoint="false" id="target" x="310" y="234"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="update_rfid to rfid_updates_lifetime" source="update_rfid" target="rfid_updates_lifetime">
-      <arcpath curvepoint="false" id="source" x="211" y="41"/>
-      <arcpath curvepoint="false" id="target" x="375" y="40"/>
+      <arcpath curvepoint="false" id="source" x="500" y="45"/>
+      <arcpath curvepoint="false" id="target" x="664" y="44"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="submit_lab_work to lab_submission_count" source="submit_lab_work" target="lab_submission_count">
-      <arcpath curvepoint="false" id="source" x="243" y="488"/>
-      <arcpath curvepoint="false" id="target" x="404" y="484"/>
+      <arcpath curvepoint="false" id="source" x="526" y="315"/>
+      <arcpath curvepoint="false" id="target" x="687" y="311"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="titer_test to titer_count" source="titer_test" target="titer_count">
-      <arcpath curvepoint="false" id="source" x="238" y="403"/>
-      <arcpath curvepoint="false" id="target" x="401" y="401"/>
+      <arcpath curvepoint="false" id="source" x="521" y="230"/>
+      <arcpath curvepoint="false" id="target" x="684" y="228"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="new_travel_process to trave_process_inflight" source="new_travel_process" target="trave_process_inflight">
-      <arcpath curvepoint="false" id="source" x="149" y="137"/>
-      <arcpath curvepoint="false" id="target" x="329" y="136"/>
+      <arcpath curvepoint="false" id="source" x="136" y="151"/>
+      <arcpath curvepoint="false" id="target" x="316" y="150"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="verified_complete to trave_certs_lifetime" source="verified_complete" target="trave_certs_lifetime">
-      <arcpath curvepoint="false" id="source" x="525" y="134"/>
-      <arcpath curvepoint="false" id="target" x="693" y="131"/>
+      <arcpath curvepoint="false" id="source" x="512" y="148"/>
+      <arcpath curvepoint="false" id="target" x="680" y="145"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="trave_process_inflight to verified_complete" source="trave_process_inflight" target="verified_complete">
-      <arcpath curvepoint="false" id="source" x="329" y="136"/>
-      <arcpath curvepoint="false" id="target" x="525" y="134"/>
+      <arcpath curvepoint="false" id="source" x="316" y="150"/>
+      <arcpath curvepoint="false" id="target" x="512" y="148"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>
       </inscription>
     </arc>
     <arc id="booster to booster_count" source="booster" target="booster_count">
-      <arcpath curvepoint="false" id="source" x="232" y="316"/>
-      <arcpath curvepoint="false" id="target" x="401" y="313"/>
+      <arcpath curvepoint="false" id="source" x="145" y="325"/>
+      <arcpath curvepoint="false" id="target" x="314" y="322"/>
+      <type value="normal"/>
+      <inscription>
+        <value>Default,1</value>
+      </inscription>
+    </arc>
+    <arc id="create_chain to chain_created" source="create_chain" target="chain_created">
+      <arcpath curvepoint="false" id="source" x="140" y="42"/>
+      <arcpath curvepoint="false" id="target" x="338" y="41"/>
       <type value="normal"/>
       <inscription>
         <value>Default,1</value>

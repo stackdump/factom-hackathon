@@ -41,9 +41,23 @@ def rpc_stream_exists(schema, oid):
     """ test that a stream exists """
     return eventstore(schema).storage.db.stream_exists(oid)
 
-def rpc_stream_create(schema, oid):
-    """ create a new stream if it doesn't exist """
+    return res
 
-    # TODO: create blockchain
+def rpc_stream_create(schema, oid):
+    """ create a new stream and a corresponding blockchain on factom """ 
+
+    res = eventstore(schema).storage.db.create_stream(oid)
+
+    if 'chain' not in schema:
+        # KLUDGE only create factom blockchain if name contains 'chain'
+        return res
+
+
+    # TODO: create blockchain and capture data as payload
     print('create blockchain for %s:%s' % (schema, oid))
-    return eventstore(schema).storage.db.create_stream(oid)
+
+    payload = '{}'
+
+    res = eventstore(schema)(oid=oid, action='create_chain', payload=payload)
+    # TODO: trigger 'create_chain' action & store chain_id to payload
+    return res
