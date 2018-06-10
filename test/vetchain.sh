@@ -13,13 +13,15 @@ RFID='123.456789999999'
 # Destroy existing DB
 #--------------------
 
-curl "${API}/api" \
-  -H 'content-type: application/json'  \
-  --data-binary '{"id":1,"method":"schema_destroy","params":["petchain"]}' $>/dev/null
+echo "API: ${API}"
 
 curl "${API}/api" \
   -H 'content-type: application/json'  \
-  --data-binary '{"id":2,"method":"schema_destroy","params":["vetchain"]}' &>/dev/null
+  --data-binary '{"id":1,"method":"schema_destroy","params":["petchain"]}'
+
+curl "${API}/api" \
+  -H 'content-type: application/json'  \
+  --data-binary '{"id":2,"method":"schema_destroy","params":["vetchain"]}'
 
 #----------------
 # Create a new DB
@@ -49,8 +51,8 @@ curl "${API}/api" \
 # register Pet's RFID
 #--------------------
 
-curl "${API}/dispatch/petchain/my_pet_uuid/update_rfid" \
+curl "${API}/dispatch/vetchain/dr_chery_york_dvm/update_rfid" \
   -H 'content-type: application/json' \
-  --data-binary '{"vetchain": "dr_chery_york_dvm", "rfid": "123.456789999999" }'
+  --data-binary '{"petchain": "my_pet_uuid", "rfid": "123.456789999999" }'
 
 
