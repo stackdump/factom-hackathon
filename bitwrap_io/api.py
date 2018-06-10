@@ -16,6 +16,8 @@ import bitwrap_io.machine as pnml
 from bitwrap_io.machine import ptnet
 from bitwrap_io.rpc import eventstore, call
 
+from petfax import factom
+
 app = Flask(__name__)
 sio = socketio.Server(async_mode='eventlet', cookie='bitwrap')
 
@@ -26,6 +28,15 @@ def commit(schema, oid, action, payload):
 
     res = eventstore(schema)(oid=oid, action=action, payload=payload)
     res['action'] = action
+    res['payload'] = payload
+ 
+    # TODO: commit to factom blockchain for each vet*pet
+    # figure out what should be an external id vs content
+
+    print('create entry for %s:%s => %s' % ('vetchain', oid, json.dumps(res)))
+
+    print('create entry for %s:%s => %s' % ('petchain', oid, json.dumps(res)))
+
     sio.emit('commit', res)
     return res
 

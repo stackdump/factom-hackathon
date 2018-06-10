@@ -6,6 +6,8 @@ import bitwrap_io.config
 import bitwrap_io.machine as pnml
 from bitwrap_io.storage import postgres
 
+from petfax import factom
+
 SETTINGS = bitwrap_io.config.options()
 
 def call(method, params):
@@ -41,4 +43,7 @@ def rpc_stream_exists(schema, oid):
 
 def rpc_stream_create(schema, oid):
     """ create a new stream if it doesn't exist """
+
+    # TODO: create blockchain
+    print('create blockchain for %s:%s' % (schema, oid))
     return eventstore(schema).storage.db.create_stream(oid)
