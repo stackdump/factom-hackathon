@@ -1,0 +1,13 @@
+
+API: http://127.0.0.1:8080
+{"id": 5, "result": {"id": "96c98ea7ce6665884aecc1c0a274902d", "oid": "testdr_chery_york_dvm", "rev": 1, "action": "create_chain", "payload": "{\"entry_hash\": \"aab344acb05d877a58ef680a2fa9dcc39ae126937606b7b2a736a8edf38b7f8f\", \"chain_id\": \"c9c6927f56c18bd50c314b2d3482135e3f620917d03ca848dffc6a0162211060\"}"}, "error": null}
+{"id": 6, "result": {"id": "dbbc56105d31fdad59d54b35887848af", "oid": "testmy_pet_uuid", "rev": 1, "action": "create_chain", "payload": "{\"entry_hash\": \"8aa1fe7922a554612ce053388a48aa62671ef3e866142fef6d2d0092af30b702\", \"chain_id\": \"2fda5eb156f12821453d7783422c702f295035fadcd59fa52cd20508c279575b\"}"}, "error": null}
+{"id": "6620261146cd433efb8cc1669ae72a12", "oid": "testdr_chery_york_dvm", "rev": 2, "action": "update_rfid", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"861844070323dfa76d2b53048f23673ebb57d9db128d69ed98b5c85ea04daab3\"}"}
+{"id": "7f453a4c94cb6423a93e40e55a481cd3", "oid": "testdr_chery_york_dvm", "rev": 3, "action": "new_travel_process", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"418ea71c8cb63c0f50dc2479abd87689f66f860da503f189f13ff58e1b2524b1\"}"}
+{"id": "3234799f4ebc92a4d0d88a73bd75a2de", "oid": "testdr_chery_york_dvm", "rev": 4, "action": "vaccine", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"ea02da5c20e40d21ea053bd310ca98beaf59bf88301253569510216dbf3a2d9c\"}"}
+{"id": "dea2eb1b36015924c4dc329a37861adb", "oid": "testdr_chery_york_dvm", "rev": 5, "action": "booster", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"ab8b1649522c185fddc7aff886416cba72a5566273eb1d928337e9553bc7326e\"}"}
+{"id": "8ce1d884574999556c90f96f7463be20", "oid": "testdr_chery_york_dvm", "rev": 6, "action": "titer_test", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"98b130042712f9e54bd0cf9a05eb14ac69ba3e3adfb19f583a1f3530df80a8e6\"}"}
+{"id": "9b989d62e7d45b212b69d310e91fc983", "oid": "testdr_chery_york_dvm", "rev": 7, "action": "submit_lab_work", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"17775d91b9b0b577eec4ddb6d3b2a1ee84817c860e6ce30b9b068b99038ad6c0\"}"}
+{"id": "7b27457e07bae71ddfe684360d56e7fe", "oid": "testdr_chery_york_dvm", "rev": 8, "action": "verified_complete", "payload": "{\"petchain\": \"testmy_pet_uuid\", \"rfid\": \"123.456789999999\", \"blockchain_entry\": \"a0828362212349bf22c6deb92ba0d33862cefbb2e04c40fe91c16a63febc4bce\"}"}
+
+Press ENTER or type command to continue
