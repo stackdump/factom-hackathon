@@ -27,6 +27,9 @@ def _decode(data):
 
 def _decode_response(data):
     res = json.loads(data)
+
+    # TODO: decode content if it exists
+
     if 'items' in res:
         for _item in res['items']:
             if 'external_ids' in _item:

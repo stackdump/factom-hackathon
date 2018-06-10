@@ -33,9 +33,9 @@ def commit(schema, oid, action, payload):
     # TODO: commit to factom blockchain for each vet*pet
     # figure out what should be an external id vs content
 
-    print('create entry for %s:%s => %s' % ('vetchain', oid, json.dumps(res)))
+    print('[%s]\n   %s => %s \n\n' % ('vetchain', oid, json.dumps(res)))
 
-    print('create entry for %s:%s => %s' % ('petchain', oid, json.dumps(res)))
+    print('[%s]\n   %s => %s\n\n' % ('petchain', oid, json.dumps(res)))
 
     sio.emit('commit', res)
     return res
