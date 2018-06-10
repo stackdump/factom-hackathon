@@ -51,6 +51,8 @@ def chains():
 
 def create_chain(external_ids=None, content=None, callback_url=None, callback_stages=None):
     """ """
+    print ('create_chain => ', external_ids, content)
+
     _ids = [ _encode(extid) for extid in external_ids ]
     payload = json.dumps({"external_ids": _ids, "content": _encode(content) })
     res = requests.request("POST", URL + '/chains', data=payload, headers=HEADERS)

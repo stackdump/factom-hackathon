@@ -1,6 +1,8 @@
 """
 rpc api - provides schema & stream CRUD
 """
+import json
+
 import bitwrap_io
 import bitwrap_io.config
 import bitwrap_io.machine as pnml
@@ -69,9 +71,7 @@ def rpc_stream_create(schema, oid):
 
 
     print('create blockchain for %s:%s' % (schema, oid))
-    # FIXME - this is borked
-    return res
-    fact_res = factom.create_chain(external_ids=[schema, str(oid)], content=_machine_def)
+    fact_res = factom.create_chain(external_ids=[schema, str(oid)], content=_machine_def(schema))
 
     _payload = json.dumps(fact_res)
 
