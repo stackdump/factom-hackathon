@@ -46,6 +46,7 @@ def rpc_stream_exists(schema, oid):
     return res
 
 def _machine_def(schema):
+    """ return json blob with petri-net state machine def """
     machine = pnml.Machine(schema)
     res = {
         'machine': {

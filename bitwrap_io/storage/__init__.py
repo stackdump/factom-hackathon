@@ -24,6 +24,19 @@ class Storage(object):
             self.db = Database(schema, kwargs)
             Storage._pool[schema] = self.db
 
+    def get_chain_id(self, schema, oid):
+        """ lookup chain_id from db """
+
+        # FIXME
+        with self.db.cursor() as cur:
+            cur.execute(sql.SQL("""
+            SELECT payload::json->'chain_id' as chain_id from {}.events
+            WHERE action = 'create_chain' and oid = %s;
+            """).format(sql.Identifier(schema)), [oid])
+            res = cur.fetchone()[0]
+
+        return res
+
     def commit(self, req):
         """ execute transition and persist to storage on success """
 

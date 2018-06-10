@@ -29,9 +29,27 @@ def _commit(schema, oid, action, payload):
     res['payload'] = payload
 
     if schema in ['petchain', 'vetchain']:
-        # NOTE: must retrieve create_stream event to get reference id
-        print("FIXME: create entry in blockchain")
-        # TODO add entry to blockchain & append data to response
+        try:
+            print('get_chain', schema, oid)
+            _chain_id = eventstore(schema).storage.get_chain_id(schema, oid)
+            print("create entry in blockchain %s" % _chain_id)
+
+            chain_res = factom.chain_add_entry(
+                 chain_id=_chain_id,
+                 external_ids=[schema, oid, action],
+                 content=json.dumps(res)
+             )
+
+            print("created entry in blockchain %s" % _chain_id)
+            _payload = json.loads(payload)
+            _payload['blockchain_entry'] = chain_res['entry_hash']
+            res['payload'] = json.dumps(_payload)
+            print(res)
+            #_payload = json.loads(payload)
+        except:
+            # FIXME this is happening when chain is not initialized
+            print('failed to commit to chain', schema, oid)
+            pass
 
     return res
 
