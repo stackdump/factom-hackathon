@@ -7,3 +7,5 @@ https://www.factom.com/blog/factom-blockchain-vs-paper-hackathon-june-9-10-in-au
 Video of all presentations https://t.co/0fuQLEcmdk
 
 Team Zoo Slides: https://github.com/stackdump/factom-hackathon/blob/master/ZooRegistryIndex.pdf
+
+Learn more about this design for event-sourced applications on the blog: https://www.blahchain.com/
